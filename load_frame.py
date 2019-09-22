@@ -42,10 +42,10 @@ def get_video_frame(video_name, load_path, save_path):
   # 001.tif ...
   
   for f in frames:
-    frame = cv2.resize(frame, dsize=(182,120), interpolation=cv2.INTER_LINEAR)
+    im = Image.open(f)
+    imarray = np.array(im)
     os.chdir(video_save_path)
-    cv2.imwrite('{}.png'.format(f[:-4]), frame)
-    
+    cv2.imwrite('{}.png'.format(f[:-4]), imarray)    
     
 def main():
   load_path, save_path = get_path()
