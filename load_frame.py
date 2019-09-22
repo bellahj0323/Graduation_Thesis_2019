@@ -20,6 +20,7 @@ def get_path():
 def get_video_list(load_path):
   video_list = os.listdir(load_path)
   return video_list
+  # Train001...Train100
 
 def make_dir(save_path):
   save_path = os.path.abspath(save_path)
@@ -37,7 +38,8 @@ def get_video_frame(video_name, load_path, save_path):
   # load frames
   video_load_path = os.path.join(load_path, video_name)
   video_load_path = os.path.abspath(video_load_path)
-  frames = os.listdir(video_load_path) // 해당 동영상의 frame 이름 목록
+  frames = os.listdir(video_load_path)
+  # 001.tif ...
   
   for f in frames:
     frame = cv2.resize(frame, dsize=(182,120), interpolation=cv2.INTER_LINEAR)
