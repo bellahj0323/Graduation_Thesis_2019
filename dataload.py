@@ -7,7 +7,7 @@ from PIL import Image
 class Dataset:
   def __init__(self, directory, batch_size, batch_per_video, seq, offset):
     self.directory = directory
-    self.videos = [os.path.join(self.directory, i) for i in os.listdir(directory)]
+    self.videos = [os.path.join(self.directory, j) for j in os.listdir(directory)]
                                                # list of videos ex) Train001, Train002, ...
     self.batch_size = batch_size
     self.batch_per_video = batch_per_video
