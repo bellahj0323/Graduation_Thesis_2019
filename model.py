@@ -25,4 +25,6 @@ def ConvLSTM():
                             ,strides=2, padding='same', data_format='channels_last'
                             ,activation='relu',kernel_initializer='he_normal'))
   
+  model.compile(optimizer='adadelta', loss='binary_crossentropy')
+  
   return model
