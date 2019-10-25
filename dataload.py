@@ -25,7 +25,7 @@ class Dataset:
     video_idx = np.random.randint(low=0, high=len(self.videos))
     video = self.videos[video_idx]
     # video 선택 했으니까 frame np.array로 불러오기
-    video_len = int(len(os.listdir(video))) - 2 - offset - seq[-1]
+    video_len = int(len(os.listdir(video))) - 2 - self.offset - seq[-1]
     frames = [os.path.join(video, '%03d.tif' %i) for i in range(video_len)]
     
     idx_y = np.random.randint(self.offset, len(frames), self.batch_per_video)
@@ -56,7 +56,7 @@ class Dataset:
   def test_loader(self, video_idx):
     video = self.videos[video_idx]
     # video 선택 했으니까 frame np.array로 불러오기    
-    video_len = int(len(os.listdir(video))) - 2 - offset - seq[-1]
+    video_len = int(len(os.listdir(video))) - 2 - self.offset - seq[-1]
     frames = [op.path.join(video, '%03d.tif' %i) for i in range(video_len)]
     
     idx_y = np.array(self.offset , len(frames))
