@@ -81,9 +81,9 @@ def main(args):
     # loading model
     try:
       with open('{}.json'.format(args.load_path), 'r') as f:
-        test_model = model_from_json(f.read())
+      test_model = model_from_json(f.read())
     except:
-        test_model = model
+      test_model = model
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
     
