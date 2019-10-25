@@ -64,6 +64,14 @@ def main(args):
   if args.train == 'train':
     dataload = dataset.train_loader()
     train(dataload, model, args.epochs, args.steps_per_epoch, args.save_path)
+    
+    # save model
+    model_json = model.to_json()
+    with open('{}.json'.format(save_path), 'w') as json_file:
+      json_file.write(model_json)
+    model.save_weight('{}.h5'.format(save_path))
+    
+    # check trained well
     x, y = next(dataload)
     pred = model.predict(x)
     
