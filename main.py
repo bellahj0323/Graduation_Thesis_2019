@@ -57,7 +57,7 @@ def test(model, x, y, batch_size):
   
   
 def main(args):
-  dataset = Dataset(args.data_path, args.seq, args.offset, args.batch_size, args.batch_per_video)
+  dataset = Dataset(args.data_path, args.offset, args.req, args.batch_size, args.batch_per_video)
   optimizer = keras.optimizers.Adam(lr=1e-4)
   model = ConvLSTM()
   
