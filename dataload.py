@@ -14,7 +14,7 @@ class Dataset:
     self.seq = seq  # list
     self.offset = offset 
     
-  def _load_fraem(self, frame_path):
+  def _load_frame(self, frame_path):
     frame = Image.open(frame_path)
     arr = np.array(frame)
     arr = np.expand_dims(arr, -1) # (158, 238, 1)
