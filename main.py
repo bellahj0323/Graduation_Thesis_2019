@@ -67,9 +67,9 @@ def main(args):
     
     # save model
     model_json = model.to_json()
-    with open('{}.json'.format(save_path), 'w') as json_file:
+    with open('{}.json'.format(args.save_path), 'w') as json_file:
       json_file.write(model_json)
-    model.save_weight('{}.h5'.format(save_path))
+    model.save_weight('{}.h5'.format(args.save_path))
     
     # check trained well
     x, y = next(dataload)
@@ -78,8 +78,14 @@ def main(args):
   elif args.train == 'test':
     video_idx = int(input('test할 동영상 인덱스를 입력하세요.'))
     x, y = dataset.test_loader(video_idx)
-    model = load_model(model, args.save_path)
-    pred = test(model, x, y, args.batch_size)
+    # loading model
+    try:
+      with open('{}.json'.format(args.load_path), 'r') as f:
+        test_model = model_from_json(f.read())
+      except:
+        test_model = model
+    test_model.load_weights('{}.h5'.format(args.load_path))
+    pred = test(test_model, x, y, args.batch_size)
     
 if __name__ == '__main__':
   main(args)
