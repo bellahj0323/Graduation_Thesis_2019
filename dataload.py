@@ -35,7 +35,7 @@ class Dataset:
     frame_x = []
     for x in zip(*idx_x):
       temp = np.array([self._load_frame(frames[i]) for i in x])
-      frame_x.append(temp_x)
+      frame_x.append(temp)
       
     return frame_x, frame_y
     
