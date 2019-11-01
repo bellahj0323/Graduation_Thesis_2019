@@ -50,10 +50,7 @@ class Dataset:
           batch_x = np.concatenate((batch_x, x), axis=0)
           batch_y = np.concatenate((batch_y, y), axis=0)
       
-      print("The size of training vector")
-      batch_x.shape
-      
-      batch_x = list(batch_x)
+      #batch_x = list(batch_x)
       yield batch_x, batch_y
       
   def test_loader(self, video_idx):
