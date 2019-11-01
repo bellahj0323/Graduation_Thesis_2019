@@ -32,11 +32,8 @@ class Dataset:
     idx_x = [[y - self.offset + x for x in self.seq] for y in idx_y]
     
     frame_y = np.array([self._load_frame(frames[i]) for i in idx_y])
-    frame_x = []
-    for x in zip(*idx_x):
-      temp = np.array([self._load_frame(frames[i]) for i in x])
-      frame_x.append(temp)
-      
+    frame_x = np.array([self._load_frame(frames[k]) for k in idx_x[j] for j in idx_x])
+    
     return frame_x, frame_y
     
   def train_loader(self):
