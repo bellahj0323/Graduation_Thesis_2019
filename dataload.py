@@ -8,6 +8,7 @@ class Dataset:
   def __init__(self, directory, offset, seq, batch_size, batch_per_video):
     self.directory = directory
     self.videos = [os.path.join(self.directory, j) for j in os.listdir(directory)]
+    self.videos = [videoname for videoname in self.videos if videoname.endswith(".tif")]
                                                # list of videos ex) Train001, Train002, ...
     self.batch_size = batch_size
     self.batch_per_video = batch_per_video
