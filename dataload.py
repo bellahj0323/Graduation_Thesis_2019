@@ -32,7 +32,10 @@ class Dataset:
     idx_x = [[y - self.offset + x for x in self.seq] for y in idx_y]
     
     frame_y = np.array([self._load_frame(frames[i]) for i in idx_y])
-    frame_x = np.array([self._load_frame(frames[k]) for k in idx_x[j] for j in idx_x])
+    frame_x = []
+    for x in idx_x:
+      temp = np.array([self._load_frame(frames[j]) for j in x])
+      frame_x.append(temp)
     
     return frame_x, frame_y
     
@@ -44,8 +47,8 @@ class Dataset:
           batch_x = x
           batch_y = y
         else:
-          batch_x = np.stack((batch_x, x), axis=0)
-          batch_y = np.stack((batch_y, y), axis=0)
+          batch_x = np.concatenate((batch_x, x), axis=1)
+          batch_y = np.concatenate((batch_y, y), axis=0)
          
       batch_x = list(batch_x)
       yield batch_x, batch_y
