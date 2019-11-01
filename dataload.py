@@ -50,8 +50,7 @@ class Dataset:
         else:
           batch_x = np.concatenate((batch_x, x), axis=0)
           batch_y = np.concatenate((batch_y, y), axis=0)
-      
-      #batch_x = list(batch_x)
+          
       yield batch_x, batch_y
       
   def test_loader(self, video_idx):
