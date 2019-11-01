@@ -33,10 +33,9 @@ class Dataset:
     
     frame_y = np.array([self._load_frame(frames[i]) for i in idx_y])
     frame_x = []
-    for x in idx_x:
-      temp = np.array([self._load_frame(frames[j]) for j in x])
-      frame_x.append(temp)
-    
+    for x in zip(*idx_x):
+      temp_x= np.array([self._load_frame(frames[i]) for i in x])
+      frame_x.append(temp_x)
     return frame_x, frame_y
     
   def train_loader(self):
@@ -47,7 +46,7 @@ class Dataset:
           batch_x = x
           batch_y = y
         else:
-          batch_x = np.concatenate((batch_x, x), axis=0)
+          batch_x = np.concatenate((batch_x, x), axis=1)
           batch_y = np.concatenate((batch_y, y), axis=0)
           
       yield batch_x, batch_y
