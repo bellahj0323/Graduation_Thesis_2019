@@ -13,7 +13,7 @@ def ConvLSTM():
   model.add(Conv3D(filters=10, kernel_size=(3,3,3)
                    ,strides=2, padding='same', data_format='channels_last'
                    ,activation='relu', kernel_initializer='he_normal'
-                  ,input_shape=(None,3,158,238,1))) # 3=sequence length
+                  ,input_shape=(None,158,238,1))) # 3=sequence length
 
   model.add(ConvLSTM2D(filters=32, kernel_size=(3,3)
                        ,activation='relu',data_format='channels_last'
