@@ -59,7 +59,7 @@ def test(model, x, y, batch_size):
 def main(args):
   dataset = Dataset(args.data_path, args.offset, args.seq, args.batch_size, args.batch_per_video)
   optimizer = keras.optimizers.Adam(lr=1e-4)
-  model = ConvLSTM()
+  model = ConvLSTM(optimizer)
   
   if args.train == 'train':
     dataload = dataset.train_loader()
