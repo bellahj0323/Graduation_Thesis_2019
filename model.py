@@ -6,7 +6,7 @@ from keras.layers.normalization import BatchNormalization
 # (n_frames, rows, cols, channels) input shape
 # (None, 158, 238, 1)
 
-def ConvLSTM():
+def ConvLSTM(optimizer):
 
   model = Sequential()
 
@@ -25,6 +25,6 @@ def ConvLSTM():
                             ,strides=2, padding='same', data_format='channels_last'
                             ,activation='relu',kernel_initializer='he_normal'))
   
-  model.compile(optimizer='adadelta', loss='binary_crossentropy')
+  model.compile(optimizer=optimizer, loss='binary_crossentropy')
   
   return model
