@@ -25,6 +25,7 @@ def ConvLSTM(optimizer):
                             ,strides=2, padding='same', data_format='channels_last'
                             ,activation='relu',kernel_initializer='he_normal'))
   
-  model.compile(optimizer=optimizer, loss='binary_crossentropy')
+  model.compile(optimizer=optimizer, loss='mean_squared_error')
+  #model.compile(optimizer=optimizer, loss='binary_crossentropy')
   
   return model
