@@ -11,6 +11,7 @@ from keras.callbacks import ModelCheckpoint
 
 from dataload import Dataset
 from model import ConvLSTM
+from model2 import CConvLSTM
 
 
 # argparse
