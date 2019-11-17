@@ -10,22 +10,13 @@ def ConvLSTM(optimizer):
 
   model = Sequential()
 
-  model.add(Conv3D(filters=10, kernel_size=(3,3,3)
-                   ,strides=2, padding='same', data_format='channels_last'
-                   ,activation='relu', kernel_initializer='he_normal'
-                  ,input_shape=(None,158,238,1)))
   
-  model.add(ConvLSTM2D(filters=32, kernel_size=(3,3)
-                       ,activation='relu',data_format='channels_last'
-                       ,padding='same',return_sequences=False))
+  model.add(ConvLSTM2D(filters=10, strides=1, padding='same', activation='relu',
+                        kernel_initializer='he_normal', kernel_size(3,3,3),
+                        input_shape=(None, 3, 128, 128, 1), return_sequences=False))
 
   model.add(BatchNormalization())
-
-  model.add(Conv2DTranspose(filters=1, kernel_size=(3,3)
-                            ,strides=2, padding='same', data_format='channels_last'
-                            ,activation='relu',kernel_initializer='he_normal'))
   
   model.compile(optimizer=optimizer, loss='mean_squared_error')
-  #model.compile(optimizer=optimizer, loss='binary_crossentropy')
   
   return model
