@@ -19,7 +19,7 @@ class Dataset:
     arr = np.array(frame)
     arr = np.expand_dims(arr, -1) # (158, 238, 1)
     arr = arr.astype('float32')
-    arr = arr.resize((128,128,1))
+    #arr = arr.resize((128,128,1))
     return arr
     
   def random_frames(self):
