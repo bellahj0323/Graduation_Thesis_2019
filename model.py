@@ -11,7 +11,7 @@ def ConvLSTM(optimizer):
   model = Sequential()
 
   
-  model.add(ConvLSTM2D(filters=10, strides=1, padding='same', activation='relu',
+  model.add(ConvLSTM2D(strides=2, padding='same', activation='relu',
                         kernel_initializer='he_normal', kernel_size=(3,3),
                         input_shape=(None, 158, 238, 1), return_sequences=False))
 
