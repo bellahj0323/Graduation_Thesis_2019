@@ -5,6 +5,7 @@ import pandas as pd
 from PIL import Image
 
 class Dataset:
+  np.random.seed(123)
   def __init__(self, directory, offset, seq, batch_size, batch_per_video):
     self.directory = directory
     self.videos = [os.path.join(self.directory, j) for j in os.listdir(directory)]
