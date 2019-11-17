@@ -76,7 +76,7 @@ def main(args):
     model_json = model.to_json()
     with open('{}.json'.format(args.save_path), 'w') as json_file:
       json_file.write(model_json)
-    model.save_weight('{}.h5'.format(args.save_path))
+    model.save_weights('{}.h5'.format(args.save_path))
     
     # check trained well
     x, y = next(dataload)
