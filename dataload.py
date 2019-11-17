@@ -38,6 +38,7 @@ class Dataset:
       temp = np.array([self._load_frame(frames[j]) for j in x])
       frame_x.append(temp)
     
+    list(frame_x)
     return frame_x, frame_y
     
   def train_loader(self):
