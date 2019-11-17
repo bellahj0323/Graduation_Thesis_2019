@@ -56,7 +56,8 @@ class Dataset:
           batch_x = x
           batch_y = y
         else:
-          batch_x = np.concatenate((batch_x, x), axis=0)
+          #batch_x = np.concatenate((batch_x, x), axis=0)
+          batch_x = np.concatenate((batch_x, x), axis=1)
           batch_y = np.concatenate((batch_y, y), axis=0)
           
       batch_x = list(batch_x)
