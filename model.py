@@ -12,7 +12,7 @@ def ConvLSTM(optimizer):
 
   
   model.add(ConvLSTM2D(filters=10, strides=1, padding='same', activation='relu',
-                        kernel_initializer='he_normal', kernel_size(3,3,3),
+                        kernel_initializer='he_normal', kernel_size=(3,3,3),
                         input_shape=(None, 3, 128, 128, 1), return_sequences=False))
 
   model.add(BatchNormalization())
