@@ -35,11 +35,18 @@ class Dataset:
     
     frame_y = np.array([self._load_frame(frames[i]) for i in idx_y])
     frame_x = []
-    for x in idx_x:
-      temp = np.array([self._load_frame(frames[j]) for j in x])
-      frame_x.append(temp)
     
+    #for x in idx_x:
+    #  temp = np.array([self._load_frame(frames[j]) for j in x])
+    #  frame_x.append(temp)
+    # [1st,2nd,3rd],[1st,2nd,3rd],[1st,2nd,3rd]]
+    
+    for x in zip(*idx_x):
+      temp = np.array([self._load_frame(frames[j]) for j in x])
+      frame_x.append(temp_x)
     return frame_x, frame_y
+    # [[1st, 1st, 1st],[2nd,2nd,2nd],[3rd,3rd,3rd]]
+  
     
   def train_loader(self):
     while True:
