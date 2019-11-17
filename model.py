@@ -4,7 +4,7 @@ from keras.layers.convolutional_recurrent import ConvLSTM2D
 from keras.layers.normalization import BatchNormalization
 
 # (n_frames, rows, cols, channels) input shape
-# (None, 158, 238, 1)
+# (None, 158, 238, 1) -> resized (None, 128, 128, 1)
 
 def ConvLSTM(optimizer):
 
