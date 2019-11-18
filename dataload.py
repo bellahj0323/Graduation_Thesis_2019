@@ -67,7 +67,7 @@ class Dataset:
     video = self.videos[video_idx]
     # video 선택 했으니까 frame np.array로 불러오기    
     video_len = int(len(os.listdir(video))) - 2 - self.offset - self.seq[-1]
-    frames = [op.path.join(video, '%03d.tif' %i) for i in range(video_len)]
+    frames = [os.path.join(video, '%03d.tif' %i) for i in range(video_len)]
     
     idx_y = np.array(self.offset , len(frames))
     idx_x = [[y - self.offset + x for x in self.seq] for y in idx_y]
