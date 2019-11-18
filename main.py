@@ -41,7 +41,8 @@ def train(dataload, model, epochs, steps_per_epoch, save_path):
     generator=dataload,
     epochs = epochs,
     steps_per_epoch = steps_per_epoch,
-    callbacks = callbacks_list
+    callbacks = callbacks_list,
+    use_multiprocessing=True
   )
   history_df = pd.DataFrame(history.history)
   history_df.to_csv('{}.csv'.format(save_path), index=False)
