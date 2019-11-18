@@ -33,6 +33,15 @@ parser.add_argument('--model_type', type=int, default=0)
 
 args = parser.parse_args()
 
+def make_image(pred, real):
+    fig = plt.figure(figsize=(13, 13))
+    ax1 = fig.add_subplot(2, 1, 1)
+    ax2 = fig.add_subplot(2, 1, 2)
+
+    ax1.imshow(pred[0][:,:,0])
+    ax2.imshow(real[0][:,:,0])
+    plt.savefig('train.png')
+
 def train(dataload, model, epochs, steps_per_epoch, save_path):
   checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='loss', verbose=1, save_best_only=True, mode='min')
   callbacks_list = [checkpoint]
@@ -82,6 +91,7 @@ def main(args):
     # check trained well
     x, y = next(dataload)
     pred = model.predict(x)
+    make_image(pred, y)
     
   elif args.train == 'test':
     video_idx = int(input('test할 동영상 인덱스를 입력하세요.'))
