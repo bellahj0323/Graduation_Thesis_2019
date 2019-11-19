@@ -69,7 +69,7 @@ class Dataset:
     video_len = int(len(os.listdir(video))) - 2 - self.offset - self.seq[-1]
     frames = [os.path.join(video, '%03d.tif' %i) for i in range(video_len)]
     
-    idx_y = np.array(self.offset , len(frames))
+    idx_y = np.arange(self.offset , len(frames))
     idx_x = [[y - self.offset + x for x in self.seq] for y in idx_y]
     
     frame_y = np.array([self._load_frame(frames[i]) for i in idx_y])
