@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--train', type=str, default='train')
 parser.add_argument('--data_path', type=str)
 parser.add_argument('--save_path', type=str)
+parser.add_argument('--load_path', type=str)
 
 parser.add_argument('--seq', nargs='+', type=int, default=[1, 5, 9])
 parser.add_argument('--offset', type=int, default=15)
