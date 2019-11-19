@@ -106,6 +106,11 @@ def main(args):
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
     
+    real = real[:len(pred)]
+    err = np.abs(pred - real)
+    print(err)
+    
+    
 if __name__ == '__main__':
   main(args)
   
