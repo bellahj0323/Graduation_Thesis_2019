@@ -65,6 +65,7 @@ class Dataset:
       
   def test_loader(self, video_idx):
     video = self.videos[video_idx]
+    print("Test 할 동영상은 %s 입니다." %video)
     # video 선택 했으니까 frame np.array로 불러오기    
     video_len = int(len(os.listdir(video))) - 2 - self.offset - self.seq[-1]
     frames = [os.path.join(video, '%03d.tif' %i) for i in range(video_len)]
