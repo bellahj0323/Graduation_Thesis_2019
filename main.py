@@ -108,7 +108,8 @@ def main(args):
     
     real = y[:len(pred)]
     err = np.abs(pred - real)
-    print("Error: %lf", %err)
+    err_mean = err.mean()
+    print("Error: %lf", %err_mean)
     
     
 if __name__ == '__main__':
