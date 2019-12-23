@@ -105,6 +105,7 @@ def main(args):
       test_model = model
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
+    make_image(pred, y)
     
     real = y[:len(pred)]
     err = np.abs(pred - real)
