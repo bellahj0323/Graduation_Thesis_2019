@@ -29,6 +29,8 @@ parser.add_argument('--steps_per_epoch', type=int, default=100)
 parser.add_argument('--batch_size', type=int, default=4)
 parser.add_argument('--batch_per_video', type=int, default=1)
 
+parser.add_argument('--layer_num', type=int, default=2)
+parser.add_argument('--channel_num', type=int, default=128)
 parser.add_argument('--model_type', type=int, default=0)
 # 0=model.py, 1=model2.py
 
@@ -75,9 +77,9 @@ def main(args):
   dataset = Dataset(args.data_path, args.offset, args.seq, args.batch_size, args.batch_per_video)
   optimizer = keras.optimizers.Adam(lr=1e-3)
   if(args.model_type == 0):
-    model = ConvLSTM(optimizer)
+    model = ConvLSTM(optimizer, args.layer_num, args.channel_num)
   elif(args.model_type == 1):
-    model = CConvLSTM(optimizer)
+    model = CConvLSTM(optimizer, args.layer_num, args.channel_num)
   
   if args.train == 'train':
     dataload = dataset.train_loader()
