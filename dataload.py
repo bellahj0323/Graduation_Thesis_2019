@@ -21,6 +21,10 @@ class Dataset:
     arr = np.array(frame)
     arr = np.expand_dims(arr, -1) # (158, 238, 1)
     arr = arr.astype('float32')
+<<<<<<< HEAD
+=======
+    #arr = arr.resize((128,128,1))
+>>>>>>> f6500b76a73516b8c600d17283b5852ffdd3538f
     return arr
     
   def random_frames(self):
