@@ -44,10 +44,10 @@ def CConvLSTM(optimizer, layer_num, channel_num):
 
   for i in range(layer_num):
     if i == 0:
-      decoder.add(Conv2DTranspose(channel_num*(2**(block_num-i)), (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal', input_shape=decoder_shape))
+      decoder.add(Conv2DTranspose(channel_num*(2**(layer_num-i)), (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal', input_shape=decoder_shape))
     else:
-      decoder.add(Conv2DTranspose(channel_num*(2**(block_num-i)), (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal'))
-    decoder.add(Conv2D(channel_num*(2**(block_num-i)), (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
+      decoder.add(Conv2DTranspose(channel_num*(2**(layer_num-i)), (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal'))
+    decoder.add(Conv2D(channel_num*(2**(layer_num-i)), (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
     
   decoder.add(Conv2D(1, (3,3), strides=1, activation='sigmoid', padding='same', kernel_initializer='he_normal'))
 
