@@ -40,7 +40,7 @@ def CConvLSTM(optimizer):
   decoder = Sequential(name='decoder')
 
   decoder.add(Conv2DTranspose(4, (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal'))
-  decoder.add(Conv2DTranspose(1, (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
+  decoder.add(Conv2DTranspose(1, (3,3), strides=1, activation='sigmoid', padding='same', kernel_initializer='he_normal'))
 
   output = decoder(convlstm)
 
