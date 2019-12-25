@@ -45,7 +45,7 @@ def CConvLSTM(optimizer):
   output = decoder(convlstm)
 
   model = Model(inputs=[input1, input2, input3], outputs=output)
-  model.compile(optimizer='adam', loss='mean_squared_error')
+  model.compile(optimizer=optimizer, loss='mean_squared_error')
   print(model.summary())
   
   return model
