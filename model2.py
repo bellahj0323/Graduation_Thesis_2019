@@ -9,7 +9,7 @@ import numpy as np
 import pylab as plt
 
 def CConvLSTM(optimizer, layer_num, channel_num):
-  input_shape=(158, 238, 1)
+  input_shape=(256, 256, 1)
   input1 = Input(shape=input_shape)
   input2 = Input(shape=input_shape)
   input3 = Input(shape=input_shape)

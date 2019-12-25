@@ -17,10 +17,10 @@ class Dataset:
     
   def _load_frame(self, frame_path):
     frame = Image.open(frame_path)
+    frame = frame.resize((256, 256))
     arr = np.array(frame)
     arr = np.expand_dims(arr, -1) # (158, 238, 1)
     arr = arr.astype('float32')
-    arr = arr.resize((128,128,1))
     return arr
     
   def random_frames(self):
