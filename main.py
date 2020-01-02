@@ -29,8 +29,8 @@ parser.add_argument('--steps_per_epoch', type=int, default=100)
 parser.add_argument('--batch_size', type=int, default=4)
 parser.add_argument('--batch_per_video', type=int, default=1)
 
-#parser.add_argument('--layer_num', type=int, default=2)
-#parser.add_argument('--channel_num', type=int, default=128)
+parser.add_argument('--layer_num', type=int, default=2)
+parser.add_argument('--channel_num', type=int, default=128)
 parser.add_argument('--model_type', type=int, default=0) # 0=model.py, 1=model2.py
 
 args = parser.parse_args()
@@ -102,10 +102,8 @@ def abnormal_test(pred, real):
 
     err[err < err_mean] = err_mean # ab=0으로 만들기 위해서
     err_pdf = err_dist.pdf(err)
-    print(err_pdf)
     err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max()-err_pdf.min())
-    print(err_pdf_norm)
-    ab = err_pdf_norm < 0.001
+    ab = err_pdf_norm < 0.0001
     score = np.mean(ab, axis=(1,2))
 
     return ab, score 
