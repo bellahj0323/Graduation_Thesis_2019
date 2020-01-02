@@ -67,8 +67,8 @@ def make_ab_video(pred, abnormal):
 
 
 def make_pred_video(pred):
-    video = cv2.VideoWriter('prediction.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
-
+    video = cv2.VideoWriter('predict.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+    
     for i in range(len(pred)):
         frame = pred[i][:,:,0] * 255
         frame = np.uint8(frame)
