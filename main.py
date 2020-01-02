@@ -29,10 +29,9 @@ parser.add_argument('--steps_per_epoch', type=int, default=100)
 parser.add_argument('--batch_size', type=int, default=4)
 parser.add_argument('--batch_per_video', type=int, default=1)
 
-parser.add_argument('--layer_num', type=int, default=2)
-parser.add_argument('--channel_num', type=int, default=128)
-parser.add_argument('--model_type', type=int, default=0)
-# 0=model.py, 1=model2.py
+#parser.add_argument('--layer_num', type=int, default=2)
+#parser.add_argument('--channel_num', type=int, default=128)
+parser.add_argument('--model_type', type=int, default=0) # 0=model.py, 1=model2.py
 
 args = parser.parse_args()
 
@@ -44,6 +43,27 @@ def make_image(pred, real):
     ax1.imshow(pred[0][:,:,0])
     ax2.imshow(real[0][:,:,0])
     plt.savefig('train.png')
+
+
+def make_video(pred, abnormal):
+    video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+
+    for i in range(len(pred)):
+        frame = pred[i][:,:,0] * 255
+        ab = abnormal[i][:,:,0]
+
+        frame[np.where(ab > 0)] = 0
+        frame = np.uint8(frame)
+        ab = ab * 100
+        ab = np.uint8(ab)
+
+        img = cv2.merge((frame,frame,ab))
+        video.write(img)
+
+    cv2.destroyAllWindows()
+    video.release()
+    print('비디오 저장 완료')
+    
 
 def train(dataload, model, epochs, steps_per_epoch, save_path):
   checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='loss', verbose=1, save_best_only=True, mode='min')
@@ -71,6 +91,24 @@ def test(model, x, y, batch_size):
       result = np.concatenate((result, pred), axis=0)
       
   return result
+
+
+def abnormal_test(pred, real):
+    real = real[:len(pred)]
+    err = np.abs(pred - real)    
+    err_mean = err.mean()
+    err_std = err.std()
+    err_dist = sp.norm(err_mean, err_std) # 정규분포
+
+    err[err < err_mean] = err_mean # ab=0으로 만들기 위해서
+    err_pdf = err_dist.pdf(err)
+    print(err_pdf)
+    err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max()-err_pdf.min())
+    print(err_pdf_norm)
+    ab = err_pdf_norm < 0.001
+    score = np.mean(ab, axis=(1,2))
+
+    return ab, score 
   
   
 def main(args):
@@ -107,12 +145,10 @@ def main(args):
       test_model = model
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
-    make_image(pred, y)
-    
-    real = y[:len(pred)]
-    err = np.abs(pred - real)
-    err_mean = err.mean()
-    print("Error: %lf" %err_mean)
+    abnormal, score = abnormal_test(pred, y)
+    plt.plot(score)
+    plt.savefig('abnormal score.png')
+    make_video(pred, abnormal)
     
     
 if __name__ == '__main__':
