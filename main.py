@@ -165,7 +165,7 @@ def main(args):
     make_ab_video(pred, abnormal)
 
   elif args.train == 'validation':
-    video_idx = int(input('validation에 사요할 동영상 인덱스를 입력하세요.'))
+    video_idx = int(input('validation에 사용할 동영상 인덱스를 입력하세요.'))
     x, y = dataset.test_loader(video_idx)
     # loading model
     try:
@@ -175,7 +175,7 @@ def main(args):
       val_model = model
       
     val_model.load_weights('{}.h5'.format(args.load_path))
-    pred = test(test_model, x, y, args.batch_size)
+    pred = test(val_model, x, y, args.batch_size)
     abnormal, score = abnormal_test(pred, y)
     plt.plot(score)
     plt.savefig('abnormal score.png')
