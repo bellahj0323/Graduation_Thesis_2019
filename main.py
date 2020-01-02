@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import scipy.stats as sp
 import matplotlib.pyplot as plt
-import cv2
 
 import keras
 import keras.layers as L
@@ -46,7 +45,7 @@ def make_image(pred, real):
     plt.savefig('train.png')
 
 
-def make_video(pred, abnormal):
+def make_ab_video(pred, abnormal):
     video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
 
     for i in range(len(pred)):
@@ -63,7 +62,21 @@ def make_video(pred, abnormal):
 
     cv2.destroyAllWindows()
     video.release()
-    print('비디오 저장 완료')
+    print('이상 비디오 저장 완료')
+
+
+def make_pred_video(pred):
+    video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+
+    for i in range(len(pred)):
+        frame = pred[i][:,:,0] * 255
+        frame = np.uint8(frame)
+        img = cv2.merge((frame,frame,frame))
+        video.write(img)
+
+    cv2.destroyAllWindows()
+    video.release()
+    print('예상 비디오 저장 완료')
     
 
 def train(dataload, model, epochs, steps_per_epoch, save_path):
@@ -147,7 +160,8 @@ def main(args):
     abnormal, score = abnormal_test(pred, y)
     plt.plot(score)
     plt.savefig('abnormal score.png')
-    make_video(pred, abnormal)
+    make_pred_video(pred)
+    make_ab_video(pred, abnormal)
     
     
 if __name__ == '__main__':
