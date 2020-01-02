@@ -47,7 +47,7 @@ def make_image(pred, real):
 
 
 def make_ab_video(pred, abnormal):
-    video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+    video = cv2.VideoWriter('abnormal.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
 
     for i in range(len(pred)):
         frame = pred[i][:,:,0] * 255
@@ -67,7 +67,7 @@ def make_ab_video(pred, abnormal):
 
 
 def make_pred_video(pred):
-    video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+    video = cv2.VideoWriter('predict.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
 
     for i in range(len(pred)):
         frame = pred[i][:,:,0] * 255
