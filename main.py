@@ -47,7 +47,7 @@ def make_image(pred, real):
 
 
 def make_ab_video(pred, abnormal):
-    video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+    video = cv2.VideoWriter('abnormal.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
 
     for i in range(len(pred)):
         frame = pred[i][:,:,0] * 255
@@ -67,7 +67,7 @@ def make_ab_video(pred, abnormal):
 
 
 def make_pred_video(pred):
-    video = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
+    video = cv2.VideoWriter('prediction.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (256,256), True)
 
     for i in range(len(pred)):
         frame = pred[i][:,:,0] * 255
@@ -163,6 +163,25 @@ def main(args):
     plt.savefig('abnormal score.png')
     make_pred_video(pred)
     make_ab_video(pred, abnormal)
+
+  elif args.train == 'validation':
+    video_idx = int(input('validation에 사요할 동영상 인덱스를 입력하세요.'))
+    x, y = dataset.test_loader(video_idx)
+    # loading model
+    try:
+      with open('{}.json'.format(args.load_path), 'r') as f:
+        val_model = model_from_json(f.read())
+    except:
+      val_model = model
+      
+    val_model.load_weights('{}.h5'.format(args.load_path))
+    pred = test(test_model, x, y, args.batch_size)
+    abnormal, score = abnormal_test(pred, y)
+    plt.plot(score)
+    plt.savefig('abnormal score.png')
+    make_pred_video(pred)
+    make_ab_video(pred, abnormal)
+    
     
     
 if __name__ == '__main__':
