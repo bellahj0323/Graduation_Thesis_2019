@@ -1,3 +1,0 @@
-2019-09-22 1. Google colab 환경 설정 2. requirement.txt 정의 3. load_frame.py 작성
-2019-10-05 C-LSTM model 설계 (model.py 작성)
-2019-10-15 dataloader 설계
