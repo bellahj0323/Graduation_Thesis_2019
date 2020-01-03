@@ -22,7 +22,7 @@ parser.add_argument('--data_path', type=str)
 parser.add_argument('--save_path', type=str)
 parser.add_argument('--load_path', type=str)
 
-parser.add_argument('--seq', nargs='+', type=int, default=[1,3,5])
+parser.add_argument('--seq', nargs='+', type=int, default=[1,2,3])
 parser.add_argument('--offset', type=int, default=30)
 
 parser.add_argument('--epochs', type=int, default=100)
