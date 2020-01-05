@@ -17,6 +17,9 @@ def CConvLSTM(optimizer, layer_num, channel_num):
   encoder = Sequential(name='encoder')
 
   encoder.add(Conv2D(32, (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal', input_shape=input_shape))
+  encoder.add(Conv2D(32, (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
+
+  encoder.add(Conv2D(64, (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal'))
   encoder.add(Conv2D(64, (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
 
   encoded1 = encoder(input1)
@@ -33,13 +36,17 @@ def CConvLSTM(optimizer, layer_num, channel_num):
 
   concat = Concatenate(axis=1)([reshaped1, reshaped2, reshaped3])
   print(concat.shape)
-  convlstm = ConvLSTM2D(32, (3,3), strides=1, padding='same', activation='relu', kernel_initializer='he_normal', return_sequences=False)(concat)
+  convlstm = ConvLSTM2D(64, (3,3), strides=1, padding='same', activation='relu', kernel_initializer='he_normal', return_sequences=False)(concat)
 
   decoder_shape = (i.value for i in convlstm.get_shape()[1:])
   decoder = Sequential(name='decoder')
 
   decoder.add(Conv2DTranspose(64, (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal'))
+  decoder.add(Conv2DTranspose(64, (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
+  
+  decoder.add(Conv2DTranspose(32, (3,3), strides=2, activation='relu', padding='same', kernel_initializer='he_normal'))
   decoder.add(Conv2DTranspose(32, (3,3), strides=1, activation='relu', padding='same', kernel_initializer='he_normal'))
+
   decoder.add(Conv2DTranspose(1, (3,3), strides=1, activation='sigmoid', padding='same', kernel_initializer='he_normal'))
 
   output = decoder(convlstm)
