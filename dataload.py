@@ -16,10 +16,10 @@ class Dataset:
     self.offset = offset 
     
   def _load_frame(self, frame_path):
-    frame = Image.open(frame_path)
-    frame = frame.resize((256, 256))
+    frame = Image.open(frame_path) # (158, 238)
+    frame = frame.resize((128, 128))
     arr = np.array(frame)
-    arr = np.expand_dims(arr, -1) # (158, 238, 1)
+    arr = np.expand_dims(arr, -1) # (128, 128, 1)
     arr = arr.astype('float32')
     arr /= 255
     return arr
