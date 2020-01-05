@@ -36,7 +36,11 @@ def CConvLSTM(optimizer, layer_num, channel_num):
 
   concat = Concatenate(axis=1)([reshaped1, reshaped2, reshaped3])
   print(concat.shape)
-  convlstm = ConvLSTM2D(256, (3,3), strides=1, padding='same', activation='relu', kernel_initializer='he_normal', return_sequences=False)(concat)
+  
+  convlstm = ConvLSTM2D(256, (3,3), strides=1, padding='same', drop_put=0.4, recurrent_dropout=0.3, activation='relu', kernel_initializer='he_normal', return_sequences=True)(concat)
+  convlstm2 = ConvLSTM2D(128, (3,3), strides=1, padding='same', drop_out=0.3, activation='relu', kernel_initializer='he_normal', return_sequences=True)(convlstm)
+  convlstm3 = ConvLSTM2D(256, (3,3), strides=1, padding='same', activation='relu', kernel_initializer='he_normal', return_sequences=False)(convlstm2)
+
 
   decoder_shape = (i.value for i in convlstm.get_shape()[1:])
   decoder = Sequential(name='decoder')
@@ -49,7 +53,7 @@ def CConvLSTM(optimizer, layer_num, channel_num):
 
   decoder.add(Conv2DTranspose(1, (3,3), strides=1, activation='sigmoid', padding='same', kernel_initializer='he_normal'))
 
-  output = decoder(convlstm)
+  output = decoder(convlstm3)
 
   model = Model(inputs=[input1, input2, input3], outputs=output)
   model.compile(optimizer=optimizer, loss='mean_squared_error')
