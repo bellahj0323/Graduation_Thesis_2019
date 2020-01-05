@@ -37,8 +37,8 @@ def CConvLSTM(optimizer, layer_num, channel_num):
   concat = Concatenate(axis=1)([reshaped1, reshaped2, reshaped3])
   print(concat.shape)
   
-  convlstm = ConvLSTM2D(256, (3,3), strides=1, padding='same', drop_put=0.4, recurrent_dropout=0.3, activation='relu', kernel_initializer='he_normal', return_sequences=True)(concat)
-  convlstm2 = ConvLSTM2D(128, (3,3), strides=1, padding='same', drop_out=0.3, activation='relu', kernel_initializer='he_normal', return_sequences=True)(convlstm)
+  convlstm = ConvLSTM2D(256, (3,3), strides=1, padding='same', dropout=0.4, recurrent_dropout=0.3, activation='relu', kernel_initializer='he_normal', return_sequences=True)(concat)
+  convlstm2 = ConvLSTM2D(128, (3,3), strides=1, padding='same', dropout=0.3, activation='relu', kernel_initializer='he_normal', return_sequences=True)(convlstm)
   convlstm3 = ConvLSTM2D(256, (3,3), strides=1, padding='same', activation='relu', kernel_initializer='he_normal', return_sequences=False)(convlstm2)
 
 
