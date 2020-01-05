@@ -107,10 +107,11 @@ def test(model, x, y, batch_size):
       
   return result
 
-
+    
 def abnormal_test(pred, real):
     real = real[:len(pred)]
-    err = np.abs(pred - real)    
+    err = np.abs(pred - real)
+    print(err.shape)
     err_mean = err.mean()
     err_std = err.std()
     err_dist = sp.norm(err_mean, err_std) # 정규분포
