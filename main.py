@@ -82,9 +82,8 @@ def make_pred_video(pred):
     
 
 def train(dataload, validation, model, epochs, steps_per_epoch, save_path):
-  checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='loss', verbose=1, save_best_only=True, mode='min')
+  checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='val_loss', verbose=1, save_best_only=True, mode='min')
   callbacks_list = [checkpoint]
-  early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
   
   history = model.fit_generator(
     generator=dataload,
@@ -92,7 +91,7 @@ def train(dataload, validation, model, epochs, steps_per_epoch, save_path):
     validation_steps=1,
     epochs = epochs,
     steps_per_epoch = steps_per_epoch,
-    callbacks = [callbacks_list, early_stopping]
+    callbacks = callbacks_list
   )
   history_df = pd.DataFrame(history.history)
   history_df.to_csv('{}.csv'.format(save_path), index=False)
