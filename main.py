@@ -9,6 +9,7 @@ import keras
 import keras.layers as L
 import keras.backend as K
 from keras.callbacks import ModelCheckpoint
+from keras.callbacks import EarlyStopping
 
 from dataload import Dataset
 from model import ConvLSTM
@@ -80,16 +81,17 @@ def make_pred_video(pred):
     print('예상 비디오 저장 완료')
     
 
-def train(dataload, model, epochs, steps_per_epoch, save_path):
+def train(dataload, validation, model, epochs, steps_per_epoch, save_path):
   checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='loss', verbose=1, save_best_only=True, mode='min')
   callbacks_list = [checkpoint]
+  early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
   
   history = model.fit_generator(
     generator=dataload,
+    validation_data=validation,
     epochs = epochs,
     steps_per_epoch = steps_per_epoch,
-    callbacks = callbacks_list,
-    #use_multiprocessing=True
+    callbacks = [callbacks_list, early_stopping]
   )
   history_df = pd.DataFrame(history.history)
   history_df.to_csv('{}.csv'.format(save_path), index=False)
@@ -134,7 +136,8 @@ def main(args):
   
   if args.train == 'train':
     dataload = dataset.train_loader()
-    train(dataload, model, args.epochs, args.steps_per_epoch, args.save_path)
+    validationload = dataset.validation_loader()
+    train(dataload, validationload, model, args.epochs, args.steps_per_epoch, args.save_path)
     
     # save model
     model_json = model.to_json()
@@ -162,27 +165,7 @@ def main(args):
     plt.plot(score)
     plt.savefig('abnormal score.png')
     make_pred_video(pred)
-    make_ab_video(pred, abnormal)
-
-  elif args.train == 'validation':
-    video_idx = int(input('validation에 사용할 동영상 인덱스를 입력하세요.'))
-    x, y = dataset.test_loader(video_idx)
-    # loading model
-    try:
-      with open('{}.json'.format(args.load_path), 'r') as f:
-        val_model = model_from_json(f.read())
-    except:
-      val_model = model
-      
-    val_model.load_weights('{}.h5'.format(args.load_path))
-    pred = test(val_model, x, y, args.batch_size)
-    abnormal, score = abnormal_test(pred, y)
-    plt.plot(score)
-    plt.savefig('abnormal score.png')
-    make_pred_video(pred)
-    make_ab_video(pred, abnormal)
-    
-    
+    make_ab_video(pred, abnormal)    
     
 if __name__ == '__main__':
   main(args)
