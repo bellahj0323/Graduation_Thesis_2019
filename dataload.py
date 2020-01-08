@@ -30,11 +30,9 @@ class Dataset:
     
   def random_frames(self, version):
     if version == 1 :
-      print("Train data loading")
       video_idx = np.random.randint(low=0, high=len(self.videos))
       video = self.videos[video_idx]
     elif version == 0 :
-      print("Validation data loading")
       video_idx = np.random.randint(low=0, high=len(self.valvideos))
       video = self.valvideos[video_idx]
       
