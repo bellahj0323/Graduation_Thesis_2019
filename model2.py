@@ -56,7 +56,7 @@ def CConvLSTM(optimizer, layer_num, channel_num):
   output = decoder(convlstm3)
 
   model = Model(inputs=[input1, input2, input3], outputs=output)
-  model.compile(optimizer=optimizer, loss='mean_squared_error', metrics=['loss', 'val_loss'])
+  model.compile(optimizer=optimizer, loss='mean_squared_error', metrics=['val_loss'])
   print(model.summary())
   
   return model
