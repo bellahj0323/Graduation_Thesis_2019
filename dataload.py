@@ -10,7 +10,7 @@ class Dataset:
     self.directory = directory
     self.train_dir = self.directory + 'Train'
     self.val_dir = self.directory + 'Validation'
-    self.videos = [os.path.join(self.trian_dir, j) for j in os.listdir(directory)]
+    self.videos = [os.path.join(self.train_dir, j) for j in os.listdir(directory)]
                                                # list of videos ex) Train001, Train002, ...
     self.valvideos = [os.path.join(self.val_dir, j) for j in os.listdir(directory)]
                                                # list of videos ex) Val001, Val002, ...
