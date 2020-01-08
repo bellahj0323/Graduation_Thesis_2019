@@ -70,7 +70,7 @@ class Dataset:
   def validation_loader(self):
     while True:
       x, y = self.random_frames(0)
-      for i==0:
+      if i==0:
         val_x = x
         val_y = y
       else:
