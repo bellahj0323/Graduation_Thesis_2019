@@ -89,7 +89,7 @@ def train(dataload, validation, model, epochs, steps_per_epoch, save_path):
   history = model.fit_generator(
     generator=dataload,
     validation_data=validation,
-    validation_steps=1
+    validation_steps=1,
     epochs = epochs,
     steps_per_epoch = steps_per_epoch,
     callbacks = [callbacks_list, early_stopping]
