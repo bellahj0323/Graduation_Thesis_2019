@@ -10,9 +10,9 @@ class Dataset:
     self.directory = directory
     self.train_dir = directory + 'Train'
     self.val_dir = directory + 'Validation'
-    self.videos = [os.path.join(self.train_dir, j) for j in os.listdir(train_dir)]
+    self.videos = [os.path.join(self.train_dir, j) for j in os.listdir(self.train_dir)]
                                                # list of videos ex) Train001, Train002, ...
-    self.valvideos = [os.path.join(self.val_dir, j) for j in os.listdir(val_dir)]
+    self.valvideos = [os.path.join(self.val_dir, j) for j in os.listdir(self.val_dir)]
                                                # list of videos ex) Val001, Val002, ...
     self.batch_size = batch_size
     self.batch_per_video = batch_per_video
