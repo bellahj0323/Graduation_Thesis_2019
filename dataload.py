@@ -8,8 +8,8 @@ class Dataset:
   np.random.seed(123)
   def __init__(self, directory, offset, seq, batch_size, batch_per_video):
     self.directory = directory
-    self.train_dir = self.directory + 'Train'
-    self.val_dir = self.directory + 'Validation'
+    self.train_dir = directory + 'Train'
+    self.val_dir = directory + 'Validation'
     self.videos = [os.path.join(self.train_dir, j) for j in os.listdir(directory)]
                                                # list of videos ex) Train001, Train002, ...
     self.valvideos = [os.path.join(self.val_dir, j) for j in os.listdir(directory)]
