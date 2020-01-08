@@ -30,11 +30,14 @@ class Dataset:
     
   def random_frames(self, version):
     if version == 1 :
+      print("Train data loading")
       video_idx = np.random.randint(low=0, high=len(self.videos))
       video = self.videos[video_idx]
     elif version == 0 :
+      print("Validation data loading")
       video_idx = np.random.randint(low=0, high=len(self.valvideos))
       video = self.valvideos[video_idx]
+      
     # video 선택 했으니까 frame np.array로 불러오기
     video_len = int(len(os.listdir(video))) - 2 - self.offset - self.seq[-1]
     frames = [os.path.join(video, '%03d.tif' %i) for i in range(video_len)]
