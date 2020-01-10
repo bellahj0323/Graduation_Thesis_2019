@@ -71,15 +71,9 @@ class Dataset:
   def validation_loader(self):
     while True:
       x, y = self.random_frames(0)
-      if i==0:
-        val_x = x
-        val_y = y
-      else:
-        val_x = np.concatenate((val_x, x), axis=1)
-        val_y = np.concatenate((val_y, y), axis=0)
+      x = list(x)
 
-      val_x = list(val_x)
-      yield val_x, val_y
+      yield x, y
     
       
   def test_loader(self, video_idx):
