@@ -131,7 +131,7 @@ def abnormal_test(pred, real):
     for i in range(len(pred)):
         mse = mean_squared_error(pred[i], real[i])
         print("frame #{} : {}".format(i, mse))
-        if mse>0.threshold:
+        if mse>threshold:
             print("Abnormal detected on frame #{}".format(i))
             make_image(pred[i], real[i])
   
