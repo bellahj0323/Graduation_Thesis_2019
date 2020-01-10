@@ -75,10 +75,17 @@ class Dataset:
 
   def validation_loader(self):
     while True:
-      x, y = self.random_frames(0)
-      x = list(x)
-
-      yield x, y
+      for i in range(int(self.batch_size/self.batch_per_video)):
+        x, y = self.random_frames(1)
+        if i == 0:
+          batch_x = x
+          batch_y = y
+        else:
+          batch_x = np.concatenate((batch_x, x), axis=1)
+          batch_y = np.concatenate((batch_y, y), axis=0)
+          
+      batch_x = list(batch_x)
+      yield batch_x, batch_y
     
       
   def test_loader(self, video_idx):

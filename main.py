@@ -82,14 +82,14 @@ def make_pred_video(pred):
     
 
 def train(dataload, validation, model, epochs, steps_per_epoch, save_path):
-  checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+  checkpoint = ModelCheckpoint('{}.h5'.format(save_path), monitor='loss', verbose=1, save_best_only=True, mode='min')
   #callbacks_list = [checkpoint]
-  early_stopping = EarlyStopping(monitor='loss', patience=50, verbose=1)
+  early_stopping = EarlyStopping(monitor='val_loss', patience=30, verbose=1)
   
   history = model.fit_generator(
     generator=dataload,
     validation_data=validation,
-    validation_steps=1,
+    validation_steps=4,
     epochs = epochs,
     steps_per_epoch = steps_per_epoch,
     callbacks = [checkpoint, early_stopping]
