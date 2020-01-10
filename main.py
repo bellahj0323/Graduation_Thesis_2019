@@ -121,7 +121,7 @@ def abnormal_test(pred, real):
     err[err < err_mean] = err_mean # ab=0으로 만들기 위해서
     err_pdf = err_dist.pdf(err)
     err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max()-err_pdf.min())
-    ab = err_pdf_norm < 0.001
+    ab = err_pdf_norm < 0.00001
     score = np.mean(ab, axis=(1,2))
 
     return ab, score 
