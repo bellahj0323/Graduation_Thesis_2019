@@ -38,7 +38,7 @@ parser.add_argument('--model_type', type=int, default=0) # 0=model.py, 1=model2.
 args = parser.parse_args()
 
 def make_image(pred, real):
-    fig = plt.figure(figsize=(13, 13))
+    fig = plt.figure(figsize=(7, 7))
     ax1 = fig.add_subplot(2, 1, 1)
     ax2 = fig.add_subplot(2, 1, 2)
 
@@ -110,21 +110,27 @@ def test(model, x, y, batch_size):
       
   return result
 
+
+def mean_squared_error(x1, x2):
+    diff = x1 - x2
+    a,b,c,d = diff.shape
+    num=a*b*c*d
+    sq_diff = diff**2
+    sum_diff = sq_diff.sum()
+    dist = np.sqrt(sum_diff)
+    mse = dist/num
+
+    return mse
+
     
 def abnormal_test(pred, real):
     real = real[:len(pred)]
-    err = np.abs(pred - real)
-    err_mean = err.mean()
-    err_std = err.std()
-    err_dist = sp.norm(err_mean, err_std) # 정규분포
 
-    err[err < err_mean] = err_mean # ab=0으로 만들기 위해서
-    err_pdf = err_dist.pdf(err)
-    err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max()-err_pdf.min())
-    ab = err_pdf_norm < 0.00001
-    score = np.mean(ab, axis=(1,2))
-
-    return ab, score 
+    for i in range(len(pred)):
+        mse = mean_squared_error(pred[i], real[i])
+        if mse>0.1:
+            print("Abnormal detected on frame #{}".format(i))
+            make_image(pred[i], real[i])
   
   
 def main(args):
@@ -162,11 +168,7 @@ def main(args):
       test_model = model
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
-    abnormal, score = abnormal_test(pred, y)
-    plt.plot(score)
-    plt.savefig('abnormal score.png')
-    make_pred_video(pred)
-    make_ab_video(pred, abnormal)    
+    abnormal_test(pred, y)  
     
 if __name__ == '__main__':
   main(args)
