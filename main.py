@@ -126,10 +126,16 @@ def mean_squared_error(x1, x2):
 
     
 def abnormal_test(pred, real):
-    threshold = 0.005
     real = real[:len(pred)]
     err = np.abs(pred - real)
-    abnormal = err > threshold
+    err_mean = err.mean()
+    err_std = err.std()
+    err_dist = sp.norm(err_mean, err_std) # 정규분포
+
+    err[err < err_mean] = err_mean # 0으로 만들기 위해
+    err_pdf = err_dist.pdf(err)
+    err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
+    abnormal = err_pdf_norm < 0.0001
     score = np.mean(abnormal, axis=(1,2))
     
     return abnormal, score
