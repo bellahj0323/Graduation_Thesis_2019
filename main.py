@@ -114,6 +114,7 @@ def test(model, x, y, batch_size):
 
 def mean_squared_error(x1, x2):
     diff = x1 - x2
+    print("difference: {}".format(diff))
     a,b,c = diff.shape
     num=a*b*c
     sq_diff = diff**2
@@ -126,11 +127,11 @@ def mean_squared_error(x1, x2):
     
 def abnormal_test(pred, real):
     real = real[:len(pred)]
-
+    threshold = 0.0005
     for i in range(len(pred)):
         mse = mean_squared_error(pred[i], real[i])
         print("frame #{} : {}".format(i, mse))
-        if mse>0.001:
+        if mse>0.threshold:
             print("Abnormal detected on frame #{}".format(i))
             make_image(pred[i], real[i])
   
