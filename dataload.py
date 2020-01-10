@@ -10,10 +10,15 @@ class Dataset:
     self.directory = directory
     self.train_dir = directory + 'Train'
     self.val_dir = directory + 'Validation'
+    self.test_dir = directory + 'Test'
+    
     self.videos = [os.path.join(self.train_dir, j) for j in os.listdir(self.train_dir)]
                                                # list of videos ex) Train001, Train002, ...
     self.valvideos = [os.path.join(self.val_dir, j) for j in os.listdir(self.val_dir)]
                                                # list of videos ex) Val001, Val002, ...
+    self.testvideos = [os.path.join(self.test_dir, j) for j in  os.listdir(self.test_dir)]
+                                              # list of videos ex) Test001, Test002, ...
+    
     self.batch_size = batch_size
     self.batch_per_video = batch_per_video
     self.seq = seq  # list
@@ -77,7 +82,7 @@ class Dataset:
     
       
   def test_loader(self, video_idx):
-    video = self.videos[video_idx]
+    video = self.testvideos[video_idx]
     print("Test 할 동영상은 %s 입니다." %video)
     # video 선택 했으니까 frame np.array로 불러오기    
     video_len = int(len(os.listdir(video))) - 2 - self.offset - self.seq[-1]
