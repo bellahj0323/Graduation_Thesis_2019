@@ -48,11 +48,11 @@ def make_image(pred, real, filename):
     plt.savefig(filename)
 
 
-def make_ab_video(pred, abnormal):
+def make_ab_video(length, real, abnormal):
     video = cv2.VideoWriter('abnormal.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (128,128), True)
 
-    for i in range(len(pred)):
-        frame = pred[i][:,:,0] * 255
+    for i in range(length):
+        frame = real[i][:,:,0] * 255
         ab = abnormal[i][:,:,0]
 
         frame[np.where(ab > 0)] = 0
@@ -126,16 +126,15 @@ def mean_squared_error(x1, x2):
 
     
 def abnormal_test(pred, real):
+    threshold = 0.005
     real = real[:len(pred)]
-    threshold = 0.0005
-    for i in range(len(pred)):
-        mse = mean_squared_error(pred[i], real[i])
-        print("frame #{} : {}".format(i, mse))
-        if mse>threshold:
-            print("Abnormal detected on frame #{}".format(i))
-            make_image(pred[i], real[i], i)
-  
-  
+    err = np.abs(pred - real)
+    abnormal = err > threshold
+    score = np.mean(abnormal, axis=(1,2))
+    
+    return abnormal, score
+
+
 def main(args):
   dataset = Dataset(args.data_path, args.offset, args.seq, args.batch_size, args.batch_per_video)
   optimizer = keras.optimizers.Adam(lr=1e-3)
@@ -171,8 +170,10 @@ def main(args):
       test_model = model
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
-    abnormal_test(pred, y)
+    
+    abnormal, score = abnormal_test(pred, y)
     make_pred_video(pred)
+    make_ab_video(len(pred), y, abnormal)
     
 if __name__ == '__main__':
   main(args)
