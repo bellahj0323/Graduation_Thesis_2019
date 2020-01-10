@@ -37,14 +37,15 @@ parser.add_argument('--model_type', type=int, default=0) # 0=model.py, 1=model2.
 
 args = parser.parse_args()
 
-def make_image(pred, real):
+def make_image(pred, real, filename):
     fig = plt.figure(figsize=(7, 7))
     ax1 = fig.add_subplot(2, 1, 1)
     ax2 = fig.add_subplot(2, 1, 2)
 
     ax1.imshow(pred[0][:,:,0])
     ax2.imshow(real[0][:,:,0])
-    plt.savefig('train.png')
+    filename = filename + ".png"
+    plt.savefig(filename)
 
 
 def make_ab_video(pred, abnormal):
@@ -128,7 +129,8 @@ def abnormal_test(pred, real):
 
     for i in range(len(pred)):
         mse = mean_squared_error(pred[i], real[i])
-        if mse>0.1:
+        print("frame #{} : {}".format(i, mse))
+        if mse>0.001:
             print("Abnormal detected on frame #{}".format(i))
             make_image(pred[i], real[i])
   
@@ -168,7 +170,8 @@ def main(args):
       test_model = model
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
-    abnormal_test(pred, y)  
+    abnormal_test(pred, y)
+    make_pred_video(pred)
     
 if __name__ == '__main__':
   main(args)
