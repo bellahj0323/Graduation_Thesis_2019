@@ -135,13 +135,14 @@ def abnormal_test(pred, real):
     err[err < err_mean] = err_mean # 0으로 만들기 위해
     err_pdf = err_dist.pdf(err)
     err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
-    abnormal = err_pdf_norm < 0.0001
+    abnormal = err_pdf_norm < 0.00001
 
     for i in range(10):
         print(err_pdf_norm[i])
         print(abnormal[i])
 
-    score = np.mean(1-abnormal, axis=(1,2))
+    score = np.mean(abnormal, axis=(1,2))
+    score = 1 - score
     
     return abnormal, score
 
