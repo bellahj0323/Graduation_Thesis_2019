@@ -160,7 +160,7 @@ def main(args):
     
   elif args.train == 'test':
 
-    for i in range(36):
+    for i in range(17, 36):
         x, y, video = dataset.test_loader(i)
         try:
             with open('{}.json'.format(args.load_path), 'r') as f:
