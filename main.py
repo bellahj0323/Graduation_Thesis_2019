@@ -182,6 +182,7 @@ def main(args):
         pred = test(test_model, x, y, args.batch_size)
         
         print("pred len = ", len(pred))
+        print("y len = ", len(y))
 
         abnormal, score = abnormal_test(pred, y)
         plt.plot(score)
