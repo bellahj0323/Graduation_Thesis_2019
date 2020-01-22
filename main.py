@@ -175,7 +175,7 @@ def main(args):
         print("y len = ", len(y))
 
         abnormal, score, detect = abnormal_test(pred, y)
-        filename = 'Test' + i + '.csv'
+        filename = 'Test' + str(i) + '.csv'
         detect.tofile(filename, sep=',')
         #plt.plot(score)
         #plt.savefig("anomaly score.png")
