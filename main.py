@@ -147,7 +147,9 @@ def abnormal_test(pred, real):
         s = idx_num - s
         score = s/idx_num
         anomaly.append(score)
-        
+
+    plt.plot(mean_score)
+    plt.savefig('anomaly mean score.png')
     return abnormal, anomaly, mean_score
     # abnormal = False인 부분은 정상, 숫자는 err_pdf_norm의 값
     # anomaly = 1이면 심한 비정상, 0이면 정상
@@ -194,8 +196,6 @@ def main(args):
     abnormal, score, mscore = abnormal_test(pred, y)
     plt.plot(score)
     plt.savefig('anomaly score.png')
-    plt.plot(mscore)
-    plt.savefig('anomaly mean score.png')
     make_pred_video(pred)
     make_ab_video(len(pred), y, abnormal)
     
