@@ -139,18 +139,16 @@ def abnormal_test(pred, real):
     mean_score = np.mean(abnormal, axis=(1,2))
     print(mean_score)
 
-    anomaly = []
-    for i in abnormal:
-        s = np.sum(i)
-        idx = np.where(i==False)
-        idx_num = len(idx[0])
-        s = idx_num - s
-        score = s/idx_num
-        anomaly.append(score)
+    #anomaly = []
+    #for i in abnormal:
+    #    s = np.sum(i)
+    #    idx = np.where(i==False)
+    #    idx_num = len(idx[0])
+    #    s = idx_num - s
+    #    score = s/idx_num
+    #    anomaly.append(score)
 
-    plt.plot(mean_score)
-    plt.savefig('anomaly mean score.png')
-    return abnormal, anomaly, mean_score
+    return abnormal, mean_score
     # abnormal = False인 부분은 정상, 숫자는 err_pdf_norm의 값
     # anomaly = 1이면 심한 비정상, 0이면 정상
     # mean_scoe = 0인 곳도 합쳐서 mean
@@ -193,9 +191,11 @@ def main(args):
     test_model.load_weights('{}.h5'.format(args.load_path))
     pred = test(test_model, x, y, args.batch_size)
     
-    abnormal, score, mscore = abnormal_test(pred, y)
-    plt.plot(score)
-    plt.savefig('anomaly score.png')
+    abnormal, mscore = abnormal_test(pred, y)
+    #plt.plot(score)
+    #plt.savefig('anomaly score.png')
+    plt.plot(mscore)
+    plt.savefig('anomaly mean score.png')
     make_pred_video(pred)
     make_ab_video(len(pred), y, abnormal)
     
