@@ -104,5 +104,5 @@ class Dataset:
       temp = np.array([self._load_frame(frames[i]) for i in x])
       frame_x.append(temp)
       
-    return frame_x, frame_y
+    return frame_x, frame_y, video
   

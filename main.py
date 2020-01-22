@@ -48,8 +48,9 @@ def make_image(pred, real, filename):
     plt.savefig(filename)
 
 
-def make_ab_video(length, real, abnormal):
-    video = cv2.VideoWriter('abnormal.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (128,128), True)
+def make_ab_video(length, real, abnormal, name):
+    filename = name + ".avi"
+    video = cv2.VideoWriter(filename, cv2.VideoWriter_fourcc('M','J','P','G'), 12, (128,128), True)
 
     for i in range(length):
         frame = real[i][:,:,0] * 255
@@ -180,24 +181,26 @@ def main(args):
     make_image(pred, y)
     
   elif args.train == 'test':
-    video_idx = int(input('test할 동영상 인덱스를 입력하세요.'))
-    x, y = dataset.test_loader(video_idx)
-    # loading model
-    try:
-      with open('{}.json'.format(args.load_path), 'r') as f:
-        test_model = model_from_json(f.read())
-    except:
-      test_model = model
-    test_model.load_weights('{}.h5'.format(args.load_path))
-    pred = test(test_model, x, y, args.batch_size)
-    
-    abnormal, mscore = abnormal_test(pred, y)
-    #plt.plot(score)
-    #plt.savefig('anomaly score.png')
-    plt.plot(mscore)
-    plt.savefig('anomaly mean score.png')
-    make_pred_video(pred)
-    make_ab_video(len(pred), y, abnormal)
+
+    for i in range(36):
+        x, y, video = dataset.test_loader(i)
+        try:
+            with open('{}.json'.format(args.load_path), 'r') as f:
+                test_model = model_from_json(f.read())
+            except:
+                test_model = model
+
+        test_model.load_weights('{}.h5'.format(args.load_path))
+        pred = test(test_model, x, y, args.batch_size)
+        
+        print("pred len = ", len(pred))
+
+        abnormal, score = abnormal_test(pred, y)
+        plt.plot(score)
+        plt.savefig("anomaly score.png")
+        make_pred_video(pred)
+        make_ab_video(len(pred), y, abnormal, video)
+        
     
 if __name__ == '__main__':
   main(args)
