@@ -137,22 +137,10 @@ def abnormal_test(pred, real):
     err_pdf = err_dist.pdf(err)
     err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
     abnormal = err_pdf_norm < 0.00001
-    mean_score = np.mean(abnormal, axis=(1,2))
-    print(mean_score)
+    score = np.mean(abnormal, axis=(1,2))
 
-    #anomaly = []
-    #for i in abnormal:
-    #    s = np.sum(i)
-    #    idx = np.where(i==False)
-    #    idx_num = len(idx[0])
-    #    s = idx_num - s
-    #    score = s/idx_num
-    #    anomaly.append(score)
-
-    return abnormal, mean_score
+    return abnormal, score
     # abnormal = False인 부분은 정상, 숫자는 err_pdf_norm의 값
-    # anomaly = 1이면 심한 비정상, 0이면 정상
-    # mean_scoe = 0인 곳도 합쳐서 mean
     
 
 
