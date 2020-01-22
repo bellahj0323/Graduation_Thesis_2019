@@ -112,22 +112,8 @@ def test(model, x, y, batch_size):
       
   return result
 
-
-def mean_squared_error(x1, x2):
-    diff = x1 - x2
-    print("difference: {}".format(diff[abs(diff) > 0.01]))
-    a,b,c = diff.shape
-    num=a*b*c
-    sq_diff = diff**2
-    sum_diff = sq_diff.sum()
-    dist = np.sqrt(sum_diff)
-    mse = dist/num
-
-    return mse
-
     
 def abnormal_test(pred, real):
-    real = real[:len(pred)]
     err = np.abs(pred - real)
     err_mean = err.mean()
     err_std = err.std()
@@ -138,11 +124,15 @@ def abnormal_test(pred, real):
     err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
     abnormal = err_pdf_norm < 0.00001
     score = np.mean(abnormal, axis=(1,2))
+    detect = np.zeros(len(score))
 
-    return abnormal, score
+    for i in range(len(score)):
+        if(score[i] > 0.012):
+            detect[i] = 1
+    
+    return abnormal, score, detect
     # abnormal = False인 부분은 정상, 숫자는 err_pdf_norm의 값
     
-
 
 def main(args):
   dataset = Dataset(args.data_path, args.offset, args.seq, args.batch_size, args.batch_per_video)
@@ -184,11 +174,13 @@ def main(args):
         print("pred len = ", len(pred))
         print("y len = ", len(y))
 
-        abnormal, score = abnormal_test(pred, y)
-        plt.plot(score)
-        plt.savefig("anomaly score.png")
-        make_pred_video(pred)
-        make_ab_video(len(pred), y, abnormal, video)
+        abnormal, score, detect = abnormal_test(pred, y)
+        filename = 'Test' + i + '.csv'
+        detect.tofile(filename, sep=',')
+        #plt.plot(score)
+        #plt.savefig("anomaly score.png")
+        #make_pred_video(pred)
+        #make_ab_video(len(pred), y, abnormal, video)
         
     
 if __name__ == '__main__':
