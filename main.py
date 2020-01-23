@@ -126,7 +126,9 @@ def abnormal_test(pred, real):
     #err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
     #abnormal = err_pdf_norm < 0.00001
 
-    abnormal = err > 0.00001
+    threshold = 0.01
+    err[err < threshold] = 0
+    abnormal = err
     score = np.mean(abnormal, axis=(1,2))
     detect = np.zeros(len(score))
 
