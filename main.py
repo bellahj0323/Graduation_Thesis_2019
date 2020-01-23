@@ -115,15 +115,19 @@ def test(model, x, y, batch_size):
     
 def abnormal_test(pred, real):
     err = np.abs(pred - real)
-    err_mean = err.mean()
-    err_std = err.std()
-    err_dist = sp.norm(err_mean, err_std) # 정규분포
+    
+    #err_mean = err.mean()
+    #err_std = err.std()
+    #err_dist = sp.norm(err_mean, err_std) # 정규분포
 
-    err[err < err_mean] = err_mean # 0으로 만들기 위해
-    err_pdf = err_dist.pdf(err)
-    err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
-    abnormal = err_pdf_norm < 0.00001
+    #err[err < err_mean] = err_mean # 0으로 만들기 위해
+    #err_pdf = err_dist.pdf(err)
+    #err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
+    #abnormal = err_pdf_norm < 0.00001
+
+    abnormal = err < 0.0000001
     score = np.mean(abnormal, axis=(1,2))
+    print(score)
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
