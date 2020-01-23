@@ -131,7 +131,7 @@ def abnormal_test(pred, real):
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
-        if(score[i] > 0.005):
+        if(score[i] > 0.1):
             detect[i] = 1
             
     
