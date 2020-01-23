@@ -125,7 +125,7 @@ def abnormal_test(pred, real):
     #err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
     #abnormal = err_pdf_norm < 0.00001
 
-    abnormal = err < 0.0000001
+    abnormal = err < 0.000001
     score = np.mean(abnormal, axis=(1,2))
     print(score)
     detect = np.zeros(len(score))
@@ -133,6 +133,7 @@ def abnormal_test(pred, real):
     for i in range(len(score)):
         if(score[i] > 0.0001):
             detect[i] = 1
+            
     
     return abnormal, score, detect
     # abnormal = False인 부분은 정상, 숫자는 err 값
@@ -185,7 +186,7 @@ def main(args):
             #plt.plot(score)
             #plt.savefig("anomaly score.png")
             #make_pred_video(pred)
-            make_ab_video(len(pred), y, abnormal, video)
+            make_ab_video(len(pred), y, abnormal, str(i))
         
     
 if __name__ == '__main__':
