@@ -131,11 +131,11 @@ def abnormal_test(pred, real):
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
-        if(score[i] > 0.012):
+        if(score[i] > 0.0001):
             detect[i] = 1
     
     return abnormal, score, detect
-    # abnormal = False인 부분은 정상, 숫자는 err_pdf_norm의 값
+    # abnormal = False인 부분은 정상, 숫자는 err 값
     
 
 def main(args):
@@ -164,27 +164,28 @@ def main(args):
     
   elif args.train == 'test':
 
-    for i in range(12, 17):
-        x, y, video = dataset.test_loader(i)
-        try:
-            with open('{}.json'.format(args.load_path), 'r') as f:
-                test_model = model_from_json(f.read())
-        except:
-            test_model = model
+    for i in range(36):
+        if(i != 16):
+            x, y, video = dataset.test_loader(i)
+            try:
+                with open('{}.json'.format(args.load_path), 'r') as f:
+                    test_model = model_from_json(f.read())
+            except:
+                test_model = model
 
-        test_model.load_weights('{}.h5'.format(args.load_path))
-        pred = test(test_model, x, y, args.batch_size)
-        
-        print("pred len = ", len(pred))
-        print("y len = ", len(y))
+            test_model.load_weights('{}.h5'.format(args.load_path))
+            pred = test(test_model, x, y, args.batch_size)
+            
+            print("pred len = ", len(pred))
+            print("y len = ", len(y))
 
-        abnormal, score, detect = abnormal_test(pred, y)
-        filename = 'Test' + str(i) + '.csv'
-        detect.tofile(filename, sep=',')
-        #plt.plot(score)
-        #plt.savefig("anomaly score.png")
-        #make_pred_video(pred)
-        #make_ab_video(len(pred), y, abnormal, video)
+            abnormal, score, detect = abnormal_test(pred, y)
+            filename = 'Test' + str(i) + '.csv'
+            detect.tofile(filename, sep=',')
+            #plt.plot(score)
+            #plt.savefig("anomaly score.png")
+            #make_pred_video(pred)
+            make_ab_video(len(pred), y, abnormal, video)
         
     
 if __name__ == '__main__':
