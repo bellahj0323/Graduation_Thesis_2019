@@ -130,6 +130,7 @@ def abnormal_test(pred, real):
     err[err < threshold] = 0
     abnormal = err
     score = np.mean(abnormal, axis=(1,2))
+    print(score)
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
