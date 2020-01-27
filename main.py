@@ -175,6 +175,7 @@ def main(args):
 
             # check groundtruth
             gtfilename = args.data_path + 'gt/Test' + str(i) + '_gt.csv'
+            print(gtfilename)
             f = open(gtfilename, 'r')
             reader = csv.reader(f)
             gt = []
