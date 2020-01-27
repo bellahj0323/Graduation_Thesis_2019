@@ -95,7 +95,6 @@ class Dataset:
     #video_len = int(len(os.listdir(video))) - 2 - self.offset - self.seq[-1] # len - 22
 
     video_len = int(len(os.listdir(video)))
-    print(video_len)
     frames = [os.path.join(video, '%03d.tif' %i) for i in range(video_len)]
     
     idx_y = np.arange(self.offset , len(frames))

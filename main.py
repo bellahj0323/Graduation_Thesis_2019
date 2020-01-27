@@ -122,7 +122,7 @@ def abnormal_test(pred, real):
     err[err < threshold] = 0
     abnormal = err
     score = np.mean(abnormal, axis=(1,2))
-    print(score)
+    #print(score)
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
@@ -173,7 +173,7 @@ def main(args):
             abnormal, score, detect = abnormal_test(pred, y)
 
             # check groundtruth
-            filename = args.datapath + 'Test' + str(i) + '_gt.csv'
+            filename = args.data_path + '/gt/Test' + str(i) + '_gt.csv'
             f = open(filename, 'r')
             reader = csv.reader(f)
             gt = []
