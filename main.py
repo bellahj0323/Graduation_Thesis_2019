@@ -174,7 +174,7 @@ def main(args):
             #print(detect)
 
             # check groundtruth
-            gtfilename = args.data_path + '/gt/Test' + str(i) + '_gt.csv'
+            gtfilename = args.data_path + 'gt/Test' + str(i) + '_gt.csv'
             f = open(gtfilename, 'r')
             reader = csv.reader(f)
             gt = []
@@ -184,12 +184,9 @@ def main(args):
 
             f.close()
 
-            print(gt)
             gt = [int(m) for n in gt for m in n]
-            print(len(gt))
             print(gt)
             detect = [int(i) for i in detect]
-            print(len(detect))
             print(detect)
             cm = confusion_matrix(gt, detect)
             cmfilename = 'Test' + str(i) + '_cm.csv'
