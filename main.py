@@ -3,7 +3,10 @@ import pandas as pd
 import numpy as np
 import scipy.stats as sp
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 import cv2
+import csv
 
 import keras
 import keras.layers as L
@@ -115,16 +118,6 @@ def test(model, x, y, batch_size):
     
 def abnormal_test(pred, real):
     err = np.abs(pred - real)
-    
-    #err_mean = err.mean()
-    #err_std = err.std()
-    #err_dist = sp.norm(err_mean, err_std) # 정규분포
-
-    #err[err < err_mean] = err_mean # 0으로 만들기 위해
-    #err_pdf = err_dist.pdf(err)
-    #err_pdf_norm = (err_pdf - err_pdf.min()) / (err_pdf.max() - err_pdf.min())
-    #abnormal = err_pdf_norm < 0.00001
-
     threshold = 0.4
     err[err < threshold] = 0
     abnormal = err
@@ -133,12 +126,15 @@ def abnormal_test(pred, real):
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
-        if(score[i] > 0.002):
+        if(score[i] > 0.003):
             detect[i] = 1
             
-    
     return abnormal, score, detect
-    # abnormal = False인 부분은 정상, 숫자는 err 값
+
+
+def calculate_f1(detect, gt):
+    confusion_matrix(detect, gt)
+    
     
 
 def main(args):
@@ -178,17 +174,27 @@ def main(args):
 
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
-            
-            print("pred len = ", len(pred))
-            print("y len = ", len(y))
-
             abnormal, score, detect = abnormal_test(pred, y)
-            filename = 'Test' + str(i) + '.csv'
-            detect.tofile(filename, sep=',')
-            #plt.plot(score)
-            #plt.savefig("anomaly score.png")
-            #make_pred_video(pred)
+
+            # check groundtruth
+            filename = 'Test' + str(i) + '_gt.csv'
+            f = open(filename, 'r')
+            reader = csv.reader(f)
+            gt = []
+
+            for j in reader:
+                gt.append(j)
+
+            f.close()
+
+            gt = [int(float(i)) for i in gt[0]]
+            cm = confusion_matrix(detect, gt)
+            
+            cm.tofile(filename, sep=',')
             make_ab_video(len(pred), y, abnormal, str(i))
+
+
+    f1score.tofile("f1score.csv", sep=',')
         
     
 if __name__ == '__main__':
