@@ -171,6 +171,7 @@ def main(args):
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
             abnormal, score, detect = abnormal_test(pred, y)
+            print(detect)
 
             # check groundtruth
             filename = args.data_path + '/gt/Test' + str(i) + '_gt.csv'
