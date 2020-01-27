@@ -185,7 +185,11 @@ def main(args):
             f.close()
 
             gt = [int(m) for n in gt for m in n]
+            print(len(gt))
+            print(gt)
             detect = [int(i) for i in detect]
+            print(len(detect))
+            print(detect)
             cm = confusion_matrix(gt, detect)
             cmfilename = 'Test' + str(i) + '_cm.csv'
             cm.tofile(cmfilename, sep=',')
