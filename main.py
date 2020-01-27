@@ -131,11 +131,7 @@ def abnormal_test(pred, real):
             
     return abnormal, score, detect
 
-
-def calculate_f1(detect, gt):
-    confusion_matrix(detect, gt)
-    
-    
+  
 
 def main(args):
   dataset = Dataset(args.data_path, args.offset, args.seq, args.batch_size, args.batch_per_video)
@@ -177,7 +173,7 @@ def main(args):
             abnormal, score, detect = abnormal_test(pred, y)
 
             # check groundtruth
-            filename = 'Test' + str(i) + '_gt.csv'
+            filename = args.datapath + 'Test' + str(i) + '_gt.csv'
             f = open(filename, 'r')
             reader = csv.reader(f)
             gt = []
@@ -187,15 +183,15 @@ def main(args):
 
             f.close()
 
-            gt = [int(float(i)) for i in gt[0]]
-            cm = confusion_matrix(detect, gt)
-            
+            gt = [int(m) for n in gt for m in n]
+            detect = [int(float(i)) for i in detect[0]]
+            cm = confusion_matrix(gt, detect)
             cm.tofile(filename, sep=',')
+            
             make_ab_video(len(pred), y, abnormal, str(i))
 
 
-    f1score.tofile("f1score.csv", sep=',')
-        
+       
     
 if __name__ == '__main__':
   main(args)
