@@ -184,6 +184,7 @@ def main(args):
 
             f.close()
 
+            print(gt)
             gt = [int(m) for n in gt for m in n]
             print(len(gt))
             print(gt)
