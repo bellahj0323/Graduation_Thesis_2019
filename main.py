@@ -174,8 +174,8 @@ def main(args):
             #print(detect)
 
             # check groundtruth
-            filename = args.data_path + '/gt/Test' + str(i) + '_gt.csv'
-            f = open(filename, 'r')
+            gtfilename = args.data_path + '/gt/Test' + str(i) + '_gt.csv'
+            f = open(gtfilename, 'r')
             reader = csv.reader(f)
             gt = []
 
@@ -187,7 +187,8 @@ def main(args):
             gt = [int(m) for n in gt for m in n]
             detect = [int(i) for i in detect]
             cm = confusion_matrix(gt, detect)
-            cm.tofile(filename, sep=',')
+            cmfilename = 'Test' + str(i) + '_cm.csv'
+            cm.tofile(cmfilename, sep=',')
             
             make_ab_video(len(pred), y, abnormal, str(i))
 
