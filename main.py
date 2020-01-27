@@ -171,7 +171,7 @@ def main(args):
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
             abnormal, score, detect = abnormal_test(pred, y)
-            print(detect)
+            #print(detect)
 
             # check groundtruth
             filename = args.data_path + '/gt/Test' + str(i) + '_gt.csv'
@@ -185,7 +185,7 @@ def main(args):
             f.close()
 
             gt = [int(m) for n in gt for m in n]
-            detect = [int(float(i)) for i in detect[0]]
+            detect = [int(i) for i in detect]
             cm = confusion_matrix(gt, detect)
             cm.tofile(filename, sep=',')
             
