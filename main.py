@@ -204,10 +204,10 @@ def main(args):
 
     for i in cm:
         print(i)
-        tp = tp + i[3]
-        fn = fn + i[2]
-        fp = fp + i[1]
-        tn = tn + i[0]
+        tp = tp + i[1][1]
+        fn = fn + i[1][0]
+        fp = fp + i[0][1]
+        tn = tn + i[0][0]
 
     # TP: 비정상을 비정상으로 정확하게 예측
     # TN: 정상을 정상으로 정확하게 예측
