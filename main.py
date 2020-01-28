@@ -126,7 +126,7 @@ def abnormal_test(pred, real):
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
-        if(score[i] > 0.003):
+        if(score[i] > 0.002):
             detect[i] = 1
             
     return abnormal, score, detect
@@ -203,7 +203,6 @@ def main(args):
 
 
     for i in cm:
-        print(i)
         tp = tp + i[0][0]
         fn = fn + i[0][1]
         fp = fp + i[1][0]
@@ -214,7 +213,8 @@ def main(args):
     # FP: 비정상을 정상으로 잘못 예측
     # FN: 정상을 비정상으로 잘못 예측
 
-    score = np.array([tp, fn, fp, tn])
+    score = np.array([[tp, fn], [fp, tn]])
+    print(score)
     score.tofile("Confusion matrix.csv", sep=',')
     
     
