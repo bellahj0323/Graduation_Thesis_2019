@@ -159,6 +159,11 @@ def main(args):
     
   elif args.train == 'test':
 
+    cm = []
+    tp = 0
+    fn = 0
+    fp = 0
+    tn = 0
     for i in range(36):
         if(i != 16):
             x, y, video = dataset.test_loader(i)
@@ -189,14 +194,23 @@ def main(args):
             print(gt)
             detect = [int(i) for i in detect]
             print(detect)
-            cm = confusion_matrix(gt, detect)
-            cmfilename = 'Test' + str(i) + '_cm.csv'
-            cm.tofile(cmfilename, sep=',')
+            cmtemp = confusion_matrix(gt, detect)
+            cm.append(cmtemp)
+            #cmfilename = 'Test' + str(i) + '_cm.csv'
+            #cmtemp.tofile(cmfilename, sep=',')
             
             make_ab_video(len(pred), y, abnormal, str(i))
 
 
-       
+    for i in cm:
+        tp = tp + i[0]
+        fn = fn + i[1]
+        fp = fp + i[2]
+        tn = tn + i[3]
+
+    score = np.array([tp, fn, fp, tn])
+    score.tofile("Confusion matrix.csv", sep=',')
+    
     
 if __name__ == '__main__':
   main(args)
