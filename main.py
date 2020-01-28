@@ -122,11 +122,10 @@ def abnormal_test(pred, real):
     err[err < threshold] = 0
     abnormal = err
     score = np.mean(abnormal, axis=(1,2))
-    print(score)
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
-        if(score[i] > 0.0022):
+        if(score[i] > 0.0023):
             detect[i] = 1
             
     return abnormal, score, detect
@@ -192,8 +191,7 @@ def main(args):
             gt = [int(m) for n in gt for m in n]
             detect = [int(i) for i in detect]
             cmtemp = confusion_matrix(gt, detect, labels=[1,0])
-            cm.append(cmtemp)
-            print(cmtemp[0][0]+cmtemp[0][1]+cmtemp[1][0]+cmtemp[1][1])            
+            cm.append(cmtemp)            
             make_ab_video(len(pred), y, abnormal, str(i))
 
 
