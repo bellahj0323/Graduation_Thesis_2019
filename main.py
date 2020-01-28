@@ -164,7 +164,7 @@ def main(args):
     fn = 0
     fp = 0
     tn = 0
-    for i in range(36):
+    for i in range(3):
         if(i != 16):
             x, y, video = dataset.test_loader(i)
             try:
@@ -203,6 +203,7 @@ def main(args):
 
 
     for i in cm:
+        print(i)
         tp = tp + i[3]
         fn = fn + i[2]
         fp = fp + i[1]
