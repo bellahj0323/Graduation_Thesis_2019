@@ -196,6 +196,7 @@ def main(args):
             print(detect)
             cmtemp = confusion_matrix(gt, detect, labels=[1,0])
             cm.append(cmtemp)
+            print(cmtemp[0][0]+cmtemp[0][1]+cmtemp[1][0]+cmtemp[1][1])
             #cmfilename = 'Test' + str(i) + '_cm.csv'
             #cmtemp.tofile(cmfilename, sep=',')
             
