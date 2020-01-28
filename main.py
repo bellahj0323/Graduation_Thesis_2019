@@ -194,7 +194,7 @@ def main(args):
             print(gt)
             detect = [int(i) for i in detect]
             print(detect)
-            cmtemp = confusion_matrix(gt, detect)
+            cmtemp = confusion_matrix(gt, detect, labels=[1,0])
             cm.append(cmtemp)
             #cmfilename = 'Test' + str(i) + '_cm.csv'
             #cmtemp.tofile(cmfilename, sep=',')
@@ -204,10 +204,10 @@ def main(args):
 
     for i in cm:
         print(i)
-        tp = tp + i[1][1]
-        fn = fn + i[1][0]
-        fp = fp + i[0][1]
-        tn = tn + i[0][0]
+        tp = tp + i[0][0]
+        fn = fn + i[0][1]
+        fp = fp + i[1][0]
+        tn = tn + i[1][0]
 
     # TP: 비정상을 비정상으로 정확하게 예측
     # TN: 정상을 정상으로 정확하게 예측
