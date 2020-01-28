@@ -118,11 +118,11 @@ def test(model, x, y, batch_size):
     
 def abnormal_test(pred, real):
     err = np.abs(pred - real)
-    threshold = 0.4
+    threshold = 0.35
     err[err < threshold] = 0
     abnormal = err
     score = np.mean(abnormal, axis=(1,2))
-    #print(score)
+    print(score)
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
@@ -176,8 +176,7 @@ def main(args):
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
             abnormal, score, detect = abnormal_test(pred, y)
-            #print(detect)
-
+            
             # check groundtruth
             gtfilename = args.data_path + 'gt/Test' + str(i) + '_gt.csv'
             print(gtfilename)
@@ -191,15 +190,10 @@ def main(args):
             f.close()
 
             gt = [int(m) for n in gt for m in n]
-            print(gt)
             detect = [int(i) for i in detect]
-            print(detect)
             cmtemp = confusion_matrix(gt, detect, labels=[1,0])
             cm.append(cmtemp)
-            print(cmtemp[0][0]+cmtemp[0][1]+cmtemp[1][0]+cmtemp[1][1])
-            #cmfilename = 'Test' + str(i) + '_cm.csv'
-            #cmtemp.tofile(cmfilename, sep=',')
-            
+            print(cmtemp[0][0]+cmtemp[0][1]+cmtemp[1][0]+cmtemp[1][1])            
             make_ab_video(len(pred), y, abnormal, str(i))
 
 
