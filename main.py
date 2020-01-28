@@ -203,10 +203,15 @@ def main(args):
 
 
     for i in cm:
-        tp = tp + i[0]
-        fn = fn + i[1]
-        fp = fp + i[2]
-        tn = tn + i[3]
+        tp = tp + i[3]
+        fn = fn + i[2]
+        fp = fp + i[1]
+        tn = tn + i[0]
+
+    # TP: 비정상을 비정상으로 정확하게 예측
+    # TN: 정상을 정상으로 정확하게 예측
+    # FP: 비정상을 정상으로 잘못 예측
+    # FN: 정상을 비정상으로 잘못 예측
 
     score = np.array([tp, fn, fp, tn])
     score.tofile("Confusion matrix.csv", sep=',')
