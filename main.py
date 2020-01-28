@@ -118,7 +118,7 @@ def test(model, x, y, batch_size):
     
 def abnormal_test(pred, real):
     err = np.abs(pred - real)
-    threshold = 0.35
+    threshold = 0.4
     err[err < threshold] = 0
     abnormal = err
     score = np.mean(abnormal, axis=(1,2))
@@ -126,7 +126,7 @@ def abnormal_test(pred, real):
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
-        if(score[i] > 0.004):
+        if(score[i] > 0.0022):
             detect[i] = 1
             
     return abnormal, score, detect
