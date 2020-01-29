@@ -130,16 +130,20 @@ def abnormal_test(pred, real):
         dist = np.sqrt(sq_sum)
         mean_dist = dist/(a*b*c)
         mse.append(mean_dist)
-        if(mean_dist > threshold):
-            detect[i] = 1
 
+    mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
     print(mse)
+
+    for i in range(len(mse)):
+        if(mse[i] > threshold):
+            detect[i] = 1
+            
 
     # make anomaly mask
     err[err < threshold] = 0
     abnormal = err
     
-    return abnormal, score, detect
+    return abnormal, detect
 
   
 
@@ -185,7 +189,7 @@ def main(args):
 
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
-            abnormal, score, detect = abnormal_test(pred, y)
+            abnormal, detect = abnormal_test(pred, y)
             
             # check groundtruth
             gtfilename = args.data_path + 'gt/Test' + str(i) + '_gt.csv'
