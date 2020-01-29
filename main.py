@@ -124,7 +124,7 @@ def abnormal_test(pred, real):
     score = np.mean(abnormal, axis=(1,2))
     print(score)
     norm_score = (score - np.min(score)) / np.max(score) # normalize
-    pirnt(norm_score)
+    print(norm_score)
 
     detect = np.zeros(len(score))
 
