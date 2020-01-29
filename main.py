@@ -118,11 +118,14 @@ def test(model, x, y, batch_size):
     
 def abnormal_test(pred, real):
     err = np.abs(pred - real)
-    err_norm = (err - np.min(err)) / np.max(err) # normalize error
-    print(err_norm)
-    threshold = 0.7
-    abnormal = err_norm[err_norm > threshold]
-    score = np.mean(abnormal, axis=(1,2))
+    threshold = 0.4
+    err[err < threshold] = 0
+    abnormal = err
+    ab_norm = (abnormal - np.min(abnormal)) / np.max(abnormal) # normalize
+    print(ab_norm)
+    score = np.mean(ab_norm, axis=(1,2))
+    print(score)
+
     detect = np.zeros(len(score))
 
     for i in range(len(score)):
