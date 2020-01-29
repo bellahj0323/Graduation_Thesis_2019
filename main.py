@@ -119,26 +119,24 @@ def test(model, x, y, batch_size):
 def abnormal_test(pred, real):
     
     err = np.abs(pred - real)
-    print(len(err))
-    # calculate mse of each frame
-    a,b,c,d = err.shape
-    print(err.shape)
-    n = a*b*c*d
-    sq_err = err**2
-    sq_sum = sq_err.sum()
-    dist = np.sqrt(sq_sum)
-    mse = dist/n
-    print(mse)
+    mse = []
+    detect = np.zeros(len(err))
     threshold = 0.5
-    detect = np.zeros(len(mse))
-
-    for i in range(len(mse)):
-        if(mse[i] > threshold):
+    # calculate mse of each frame
+    for i in range(len(err)):
+        a,b,c = err[i].shape
+        sq_err = err[i]**2
+        sq_sum = sq_err.sum()
+        dist = np.sqrt(sq_sum)
+        mean_dist = dist/(a*b*c)
+        mse.append(mean_dist)
+        if(mean_dist > threshold):
             detect[i] = 1
 
+    print(mse)
 
     # make anomaly mask
-    err[err < 0.4] = 0
+    err[err < threshold] = 0
     abnormal = err
     
     return abnormal, score, detect
