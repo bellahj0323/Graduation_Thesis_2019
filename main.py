@@ -216,7 +216,7 @@ def main(args):
             gt = [int(m) for n in gt for m in n]
 
             # Make a figure of score with gt
-            make_score_figure(mse, gt, i):
+            make_score_figure(mse, gt, i)
             
             detect = [int(i) for i in detect]
             # Make a confusion matrix
