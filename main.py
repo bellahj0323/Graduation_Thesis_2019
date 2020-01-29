@@ -117,8 +117,9 @@ def test(model, x, y, batch_size):
 
     
 def abnormal_test(pred, real):
-    print(len(err))
+    
     err = np.abs(pred - real)
+    print(len(err))
     # calculate mse of each frame
     a,b,c,d = err.shape
     print(err.shape)
