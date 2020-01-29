@@ -122,7 +122,7 @@ def abnormal_test(pred, real):
     # normalize error 0 ~ 1
     print(err_norm)
     
-    threshold = 0.6
+    threshold = 0.5
     err[err < threshold] = 0
     abnormal = err
     score = np.mean(abnormal, axis=(1,2))
