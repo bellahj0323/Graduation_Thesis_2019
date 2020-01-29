@@ -91,7 +91,7 @@ def make_score_figure(mse, gt, filenum):
     plt.xlabel('frame')
     plt.ylabel('anomaly score')
     plt.bar(gt, 1)
-    filename = filenum + "score_figure.png"
+    filename = str(filenum) + "score_figure.png"
     plt.savefig(filename)
     
     
