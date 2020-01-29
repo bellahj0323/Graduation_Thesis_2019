@@ -120,6 +120,8 @@ def abnormal_test(pred, real):
     err = np.abs(pred - real)
     err_norm = (err - np.min(err)) / (np.max(err)-np.min(err))
     # normalize error 0 ~ 1
+    print(err_norm)
+    
     threshold = 0.6
     err[err < threshold] = 0
     abnormal = err
