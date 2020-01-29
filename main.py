@@ -121,10 +121,10 @@ def abnormal_test(pred, real):
     threshold = 0.4
     err[err < threshold] = 0
     abnormal = err
-    ab_norm = (abnormal - np.min(abnormal)) / np.max(abnormal) # normalize
-    print(ab_norm)
-    score = np.mean(ab_norm, axis=(1,2))
+    score = np.mean(abnormal, axis=(1,2))
     print(score)
+    norm_score = (score - np.min(score)) / np.max(score) # normalize
+    pirnt(norm_score)
 
     detect = np.zeros(len(score))
 
