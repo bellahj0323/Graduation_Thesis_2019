@@ -87,10 +87,13 @@ def make_pred_video(pred):
 
 
 def make_score_figure(mse, gt, filenum):
+    fig = plt.figure(figsize=(10,5))
     plt.plot(mse, c='k')
     plt.xlabel('frame')
     plt.ylabel('anomaly score')
-    plt.bar(gt, 1)
+    gt = np.array(gt)
+    gt_idx = np.where(gt==1)
+    plt.bar(gt_idx[0], 1)
     filename = str(filenum) + "score_figure.png"
     plt.savefig(filename)
     
