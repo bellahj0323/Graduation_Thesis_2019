@@ -13,10 +13,15 @@ class Dataset:
     self.test_dir = directory + 'Test'
     
     self.videos = [os.path.join(self.train_dir, j) for j in os.listdir(self.train_dir)]
+    self.videos.sort()
                                                # list of videos ex) Train001, Train002, ...
+                                               
     self.valvideos = [os.path.join(self.val_dir, j) for j in os.listdir(self.val_dir)]
+    self.valvideos.sort()
                                                # list of videos ex) Val001, Val002, ...
+                                
     self.testvideos = [os.path.join(self.test_dir, j) for j in  os.listdir(self.test_dir)]
+    self.testvideos.sort()
                                               # list of videos ex) Test001, Test002, ...
     
     self.batch_size = batch_size
