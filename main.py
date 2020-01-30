@@ -138,9 +138,7 @@ def abnormal_test(pred, real):
     mse = []
     detect = np.zeros(len(err))
     print(err)
-    
-    #err[err < err_mean] = 0
-    
+        
     # calculate mse of each frame
     for i in range(len(err)):
         a,b,c = err[i].shape
@@ -151,7 +149,7 @@ def abnormal_test(pred, real):
         mse.append(mean_dist)
 
     #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
-    mse = mse / np.max(mse) # limit max as 1]
+    mse = mse / np.max(mse) # limit max as 1
 
     threshold = 0.78
     for i in range(len(mse)):
@@ -160,7 +158,7 @@ def abnormal_test(pred, real):
 
 
     # make anomaly mask
-    err[err < 0.4] = 0
+    err[err < 0.35] = 0
     abnormal = err
             
 
@@ -230,6 +228,7 @@ def main(args):
             make_score_figure(mse, gt, threshold, i)
             
             detect = [int(i) for i in detect]
+            detect.tofile("detect_"+str(i)+".csv", sep=',')
             # Make a confusion matrix
             cmtemp = confusion_matrix(gt, detect, labels=[1,0])
             cm.append(cmtemp)            
