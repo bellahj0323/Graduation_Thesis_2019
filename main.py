@@ -136,8 +136,7 @@ def abnormal_test(pred, real):
     err_mean = err.mean()
     mse = []
     detect = np.zeros(len(err))
-    #print(err)
-    threshold = 0.45
+    print(err)
     
     #err[err < err_mean] = 0
     
@@ -151,16 +150,15 @@ def abnormal_test(pred, real):
         mse.append(mean_dist)
 
     #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
-    mse = mse / np.max(mse) # limit max as 1
-    print(mse)
+    mse = mse / np.max(mse) # limit max as 1]
 
     for i in range(len(mse)):
-        if(mse[i] > threshold):
+        if(mse[i] > 0.8):
             detect[i] = 1
 
 
     # make anomaly mask
-    err[err < threshold] = 0
+    err[err < 0.4] = 0
     abnormal = err
             
 
