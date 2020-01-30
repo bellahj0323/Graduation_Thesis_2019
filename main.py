@@ -150,7 +150,7 @@ def abnormal_test(pred, real):
     #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
     mse = mse / np.max(mse) # limit max as 1
 
-    threshold = 0.78
+    threshold = 0.79
     for i in range(len(mse)):
         if(mse[i] > threshold):
             detect[i] = 1
@@ -233,7 +233,7 @@ def main(args):
             cm.append(cmtemp)
             detect = np.array(detect)
             detect.tofile("detect_"+str(i+1)+".csv", sep=',')
-            make_ab_video(len(pred), y, abnormal, str(i))
+            make_ab_video(len(pred), y, abnormal, str(i+1))
 
 
     for i in cm:
