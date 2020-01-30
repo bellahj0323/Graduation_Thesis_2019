@@ -150,7 +150,7 @@ def abnormal_test(pred, real):
     #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
     mse = mse / np.max(mse) # limit max as 1
 
-    threshold = 0.79
+    threshold = 0.78
     for i in range(len(mse)):
         if(mse[i] > threshold):
             detect[i] = 1
@@ -209,6 +209,8 @@ def main(args):
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
             abnormal, mse, detect, threshold = abnormal_test(pred, y)
+            mse = np.array(mse)
+            mse.tofile("mse"+str(i+1)+".csv", sep=',')
             
             # check groundtruth
             gtfilename = args.data_path + 'gt/Test' + str(i+1) + '_gt.csv'
