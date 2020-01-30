@@ -196,7 +196,8 @@ def main(args):
     fn = 0
     fp = 0
     tn = 0
-    for i in range(36):
+    # ped1 -> 36, ped2 -> 12
+    for i in range(12):
         if(i != 16):
             x, y, video = dataset.test_loader(i)
             try:
@@ -210,7 +211,7 @@ def main(args):
             abnormal, mse, detect, threshold = abnormal_test(pred, y)
             
             # check groundtruth
-            gtfilename = args.data_path + 'gt/Test' + str(i) + '_gt.csv'
+            gtfilename = args.data_path + 'gt/Test' + str(i+1) + '_gt.csv'
             print(gtfilename)
             f = open(gtfilename, 'r')
             reader = csv.reader(f)
@@ -231,7 +232,7 @@ def main(args):
             cmtemp = confusion_matrix(gt, detect, labels=[1,0])
             cm.append(cmtemp)
             detect = np.array(detect)
-            detect.tofile("detect_"+str(i)+".csv", sep=',')
+            detect.tofile("detect_"+str(i+1)+".csv", sep=',')
             make_ab_video(len(pred), y, abnormal, str(i))
 
 
