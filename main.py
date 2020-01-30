@@ -72,8 +72,9 @@ def make_ab_video(length, real, abnormal, name):
     print('이상 비디오 저장 완료')
 
 
-def make_pred_video(pred):
-    video = cv2.VideoWriter('predict.avi', cv2.VideoWriter_fourcc('M','J','P','G'), 12, (128,128), True)
+def make_pred_video(pred, name):
+    filename = "predict"+name+".avi"
+    video = cv2.VideoWriter(filename, cv2.VideoWriter_fourcc('M','J','P','G'), 12, (128,128), True)
     
     for i in range(len(pred)):
         frame = pred[i][:,:,0] * 255
@@ -237,6 +238,7 @@ def main(args):
             detect = np.array(detect)
             detect.tofile("detect_"+str(i+1)+".csv", sep=',')
             make_ab_video(len(pred), y, abnormal, str(i+1))
+            make_pred_video(pred, str(i+1))
 
 
     for i in cm:
