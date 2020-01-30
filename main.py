@@ -158,7 +158,7 @@ def abnormal_test(pred, real):
 
 
     # make anomaly mask
-    err[err < 0.35] = 0
+    err[err < 0.4] = 0
     abnormal = err
             
 
