@@ -86,9 +86,10 @@ def make_pred_video(pred):
     print('예상 비디오 저장 완료')
 
 
-def make_score_figure(mse, gt, filenum):
+def make_score_figure(mse, gt, threshold, filenum):
     fig = plt.figure(figsize=(10,5))
     plt.plot(mse, c='k')
+    plt.axhline(y=threshold, color='r', linewidth=1, linestyle='--')
     plt.xlabel('frame')
     plt.ylabel('anomaly score')
     gt = np.array(gt)
@@ -152,8 +153,9 @@ def abnormal_test(pred, real):
     #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
     mse = mse / np.max(mse) # limit max as 1]
 
+    threshold = 0.78
     for i in range(len(mse)):
-        if(mse[i] > 0.78):
+        if(mse[i] > threshold):
             detect[i] = 1
 
 
@@ -162,7 +164,7 @@ def abnormal_test(pred, real):
     abnormal = err
             
 
-    return abnormal, mse, detect
+    return abnormal, mse, detect, threshold
 
   
 
@@ -208,7 +210,7 @@ def main(args):
 
             test_model.load_weights('{}.h5'.format(args.load_path))
             pred = test(test_model, x, y, args.batch_size)
-            abnormal, mse, detect = abnormal_test(pred, y)
+            abnormal, mse, detect, threshold = abnormal_test(pred, y)
             
             # check groundtruth
             gtfilename = args.data_path + 'gt/Test' + str(i) + '_gt.csv'
@@ -225,7 +227,7 @@ def main(args):
             gt = [int(m) for n in gt for m in n]
 
             # Make a figure of score with gt
-            make_score_figure(mse, gt, i)
+            make_score_figure(mse, gt, threshold, i)
             
             detect = [int(i) for i in detect]
             # Make a confusion matrix
