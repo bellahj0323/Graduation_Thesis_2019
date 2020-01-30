@@ -138,10 +138,7 @@ def abnormal_test(pred, real):
     print(err)
     threshold = 0.45
     
-    # make anomaly mask
     err[err < err_mean] = 0
-    abnormal = err[err < threshold]
-    
     # calculate mse of each frame
     for i in range(len(err)):
         a,b,c = err[i].shape
@@ -157,6 +154,11 @@ def abnormal_test(pred, real):
     for i in range(len(mse)):
         if(mse[i] > threshold):
             detect[i] = 1
+
+
+    # make anomaly mask
+    err[err < threshold] = 0
+    abnormal = err
             
 
     return abnormal, mse, detect
