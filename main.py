@@ -137,7 +137,6 @@ def abnormal_test(pred, real):
     err_mean = err.mean()
     mse = []
     detect = np.zeros(len(err))
-    print(err)
         
     # calculate mse of each frame
     for i in range(len(err)):
@@ -228,10 +227,11 @@ def main(args):
             make_score_figure(mse, gt, threshold, i)
             
             detect = [int(i) for i in detect]
-            detect.tofile("detect_"+str(i)+".csv", sep=',')
             # Make a confusion matrix
             cmtemp = confusion_matrix(gt, detect, labels=[1,0])
-            cm.append(cmtemp)            
+            cm.append(cmtemp)
+            detect = np.array(detect)
+            detect.tofile("detect_"+str(i)+".csv", sep=',')
             make_ab_video(len(pred), y, abnormal, str(i))
 
 
