@@ -135,10 +135,11 @@ def abnormal_test(pred, real):
     err_mean = err.mean()
     mse = []
     detect = np.zeros(len(err))
-    print(err)
+    #print(err)
     threshold = 0.45
     
-    err[err < err_mean] = 0
+    #err[err < err_mean] = 0
+    
     # calculate mse of each frame
     for i in range(len(err)):
         a,b,c = err[i].shape
@@ -148,7 +149,7 @@ def abnormal_test(pred, real):
         mean_dist = dist/(a*b*c)
         mse.append(mean_dist)
 
-    mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
+    #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
     print(mse)
 
     for i in range(len(mse)):
