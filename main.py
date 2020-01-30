@@ -92,8 +92,9 @@ def make_score_figure(mse, gt, filenum):
     plt.xlabel('frame')
     plt.ylabel('anomaly score')
     gt = np.array(gt)
+    max_y = np.max(mse)
     gt_idx = np.where(gt==1)
-    plt.bar(gt_idx[0], 1)
+    plt.bar(gt_idx[0], max_y)
     filename = str(filenum) + "score_figure.png"
     plt.savefig(filename)
     
