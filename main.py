@@ -197,7 +197,7 @@ def main(args):
     fp = 0
     tn = 0
     # ped1 -> 36, ped2 -> 12
-    for i in range(12):
+    for i in range(36):
         if(i != 16):
             x, y, video = dataset.test_loader(i)
             try:
