@@ -153,7 +153,7 @@ def abnormal_test(pred, real):
     mse = mse / np.max(mse) # limit max as 1]
 
     for i in range(len(mse)):
-        if(mse[i] > 0.8):
+        if(mse[i] > 0.85):
             detect[i] = 1
 
 
