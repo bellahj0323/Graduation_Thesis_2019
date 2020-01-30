@@ -132,14 +132,15 @@ def test(model, x, y, batch_size):
 def abnormal_test(pred, real):
     
     err = np.abs(pred - real)
+    err_mean = err.mean()
     mse = []
     detect = np.zeros(len(err))
     print(err)
     threshold = 0.45
     
     # make anomaly mask
-    err[err < threshold] = 0
-    abnormal = err
+    err[err < err_mean] = 0
+    abnormal = err[err < threshold]
     
     # calculate mse of each frame
     for i in range(len(err)):
