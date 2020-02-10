@@ -215,7 +215,7 @@ def main(args):
             mse.tofile("mse"+str(i+1)+".csv", sep=',')
             
             # check groundtruth
-            gtfilename = args.data_path + 'gt/Test' + str(i+1) + '_gt.csv'
+            gtfilename = args.data_path + 'gt2/Test' + str(i+1) + '_gt.csv'
             print(gtfilename)
             f = open(gtfilename, 'r')
             reader = csv.reader(f)
