@@ -151,7 +151,7 @@ def abnormal_test(pred, real):
     #mse = (mse-np.min(mse))/(np.max(mse)-np.min(mse)) # normalize
     mse = mse / np.max(mse) # limit max as 1
 
-    threshold = 0.77
+    threshold = 0.78
     for i in range(len(mse)):
         if(mse[i] > threshold):
             detect[i] = 1
@@ -199,7 +199,7 @@ def main(args):
     tn = 0
     # ped1 -> 36, ped2 -> 12
     # ped1 Test017 142 frame 이상
-    for i in range(36):
+    for i in range(12):
         if(i != 16):
             x, y, video = dataset.test_loader(i)
             try:
