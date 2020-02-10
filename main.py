@@ -199,7 +199,7 @@ def main(args):
     tn = 0
     # ped1 -> 36, ped2 -> 12
     # ped1 Test017 142 frame 이상
-    for i in range(12):
+    for i in range(36):
         if(i != 16):
             x, y, video = dataset.test_loader(i)
             try:
